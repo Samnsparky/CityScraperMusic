@@ -1,9 +1,19 @@
 package org.sampottinger.cityscraper;
 import java.io.IOException;
 
-import org.phineas.core.GameFacade;
+import org.phineas.core.PhineasDrawable;
 import org.phineas.core.PhineasException;
-import org.sampottinger.cityscraper.TufteSlider.SliderDirection;
+import org.phineas.core.PhineasGameFacade;
+import org.sampottinger.cityscraper.gui.DecoratedSlidingCollection;
+import org.sampottinger.cityscraper.gui.IconToggleButton;
+import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
+import org.sampottinger.cityscraper.gui.ToggleButton;
+import org.sampottinger.cityscraper.gui.ToggleUnderlineButton;
+import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelector;
+import org.sampottinger.cityscraper.init.DecoratedSlidingCollectionBuilder;
+import org.sampottinger.cityscraper.init.NodeTabSelectButtonBuilder;
+import org.sampottinger.cityscraper.init.NodeTypeSelectorBuilder;
+import org.sampottinger.cityscraper.init.SoundNodeButtonFactory;
 
 /**
  * Main executable class for the Cityscraper game
@@ -11,40 +21,44 @@ import org.sampottinger.cityscraper.TufteSlider.SliderDirection;
  */
 public class Cityscraper {
 	
-	private static final int WIDTH = 700;
+	private static final int WIDTH = 800;
 	private static final int HEIGHT = 700;
-	private static final int MIN_SPEED = 0;
-	private static final int MAX_SPEED = 100;
+	private static final int NODE_SELECTOR_X = 645;
+	private static final int NODE_SELECTOR_Y = 0;
+	
+	private static final int BUTTON_FG_DEPTH = PhineasDrawable.DEFAULT_DEPTH;
+	private static final int BUTTON_BG_DEPTH = PhineasDrawable.DEFAULT_DEPTH + 1;
 	
 	public static void main(String [] args)
 	{
-		SpeedController speedController;
-		TufteSlider speedSlider;
+		NodeTypeSelectorBuilder nodeSelectorBuilder;
+		NodeTypeSelector nodeTypeSelector;
 		
 		// Create high level game facade
-		GameFacade game = GameFacade.getInstance();
+		PhineasGameFacade game = PhineasGameFacade.getInstance();
 		
 		// Resize game window
 		game.setDimensions(WIDTH, HEIGHT); 
 		
-		// Create speed slider
-		speedController = new SpeedController(MIN_SPEED, MAX_SPEED);
-		speedSlider = new TufteSlider(speedController, 100, 10, 200, 10, SliderDirection.VERTICAL, true);
-		
 		// Start game
 		try 
-		{
-			game.addEntity(speedSlider);
+		{	
+			// Create node type selector
+			nodeSelectorBuilder = new NodeTypeSelectorBuilder(NODE_SELECTOR_X, NODE_SELECTOR_Y, HEIGHT, 
+					BUTTON_BG_DEPTH, BUTTON_FG_DEPTH, game);
+			nodeTypeSelector = nodeSelectorBuilder.createSelector();
+			game.addEntity(nodeTypeSelector);
+			
 			game.startGame();
 		}
 		catch (PhineasException e)
 		{
 			System.out.println("Failed to start game because of Phineas errror: " + e);
 		}
-		/*catch (IOException e) 
+		catch (IOException e) 
 		{
 			System.out.println("Failed to start game because of IO error: " + e);
-		}*/
+		}
 	}
 
 }

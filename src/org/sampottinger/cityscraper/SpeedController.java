@@ -1,6 +1,8 @@
 package org.sampottinger.cityscraper;
 
-public class SpeedController implements TufteSliderSource
+import org.sampottinger.cityscraper.gui.SliderSource;
+
+public class SpeedController implements SliderSource
 {
 	private int speed;
 	private int min;

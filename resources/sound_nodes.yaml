@@ -1,0 +1,152 @@
+# Name: sound_nodes.yaml
+# Desc: Description of all of the available sounds for Cityscraper
+
+sounds:
+
+    - name: catch rain
+      image: img/catch_rain.png
+      sound: wav/catch_rain.wav
+
+    - name: clap 1
+      image: img/clap_1.png
+      sound: wav/claps_1.wav
+
+    - name: clap 2
+      image: img/clap_2.png
+      sound: wav/claps_2.wav
+
+    - name: clap 3
+      image: img/clap_3.png
+      sound: wav/claps_3.wav
+
+    - name: close stall
+      image: img/close_stall.png
+      sound: wav/close_stall.wav
+
+    - name: crack windw
+      image: img/crack_window.png
+      sound: wav/crack_window.wav
+
+    - name: crumple
+      image: img/crumple.png
+      sound: wav/crumple.wav
+
+    - name: cut paper
+      image: img/cut_paper.png
+      sound: wav/cut_paper.wav
+
+    - name: drnk fountn 1
+      image: img/drink_fountain_1.png
+      sound: wav/drink_fountain_1.wav
+
+    - name: drnk fountn 2
+      image: img/drink_fountain_2.png
+      sound: wav/drink_fountain_2.wav
+
+    - name: drnk fountn 3
+      image: img/drink_fountain_3.png
+      sound: wav/drink_fountain_3.wav
+
+    - name: exhale
+      image: img/exhale.png
+      sound: wav/exhale.wav
+
+    - name: flsh toilet 1
+      image: img/flush_toilet_1.png
+      sound: wav/flush_toilet_1.wav
+
+    - name: flsh toilet 2
+      image: img/flush_toilet_2.png
+      sound: wav/flush_toilet_2.wav
+
+    - name: flsh toilet 3
+      image: img/flush_toilet_3.png
+      sound: wav/flush_toilet_3.wav
+
+    - name: hit bottle 1
+      image: img/water_bottle_1.png
+      sound: wav/water_bottle_1.wav
+
+    - name: hit bottle 2
+      image: img/water_bottle_2.png
+      sound: wav/water_bottle_2.wav
+
+    - name: hit bottle 3
+      image: img/water_bottle_3.png
+      sound: wav/water_bottle_3.wav
+
+    - name: inhale
+      image: img/inhale.png
+      sound: wav/inhale.wav
+
+    - name: insert key
+      image: img/insert_key.png
+      sound: wav/insert_key.wav
+
+    - name: open elevtor
+      image: img/open_elevator.png
+      sound: wav/open_elevator.wav
+
+    - name: open window
+      image: img/open_window.png
+      sound: wav/open_window.wav
+
+    - name: pull ppr twl
+      image: img/pull_paper_towl.png
+      sound: wav/pull_paper_towl.wav
+
+    - name: rain
+      image: img/rain.png
+      sound: wav/rain.wav
+
+    - name: rip paper
+      image: img/rip_paper.png
+      sound: wav/rip_paper.wav
+
+    - name: rub
+      image: img/rub.png
+      sound: wav/rub.wav
+
+    - name: shut door
+      image: img/shut_door.png
+      sound: wav/shut_door.wav
+
+    - name: squeak shoe
+      image: img/shoe_squeak.png
+      sound: wav/shoe_squeak.wav
+
+    - name: crk smll door
+      image: img/small_door.png
+      sound: wav/small_door.wav
+
+    - name: take sec
+      image: img/take_sec.png
+      sound: wav/take_sec.wav
+
+    - name: talk
+      image: img/talk.png
+      sound: wav/talk.wav
+
+    - name: tear ppr twl
+      image: img/tear_paper_towl.png
+      sound: wav/tear_paper_towl.wav
+
+    - name: turn faucet
+      image: img/sink.png
+      sound: wav/sink.wav
+
+    - name: type
+      image: img/type.png
+      sound: wav/type.png
+
+    - name: unlock door
+      image: img/unlock_door.png
+      sound: wav/unlock_door.wav
+
+    - name: unlock window
+      image: img/unlock_window.png
+      sound: wav/unlock_window.wav
+
+    - name: walk
+      image: img/walk.png
+      sound: wav/walk.wav
