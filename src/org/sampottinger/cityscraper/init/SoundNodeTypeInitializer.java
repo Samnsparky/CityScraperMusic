@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.phineas.contrib.PhineasSprite;
 import org.phineas.core.PhineasException;
 import org.sampottinger.cityscraper.gui.IconToggleButton;
 import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorStateManager;
+import org.sampottinger.cityscraper.nodes.SoundNodePrototype;
 
 /**
  * Facade to work with sound node configuration file to load sound
@@ -67,7 +69,8 @@ public class SoundNodeTypeInitializer implements NodeTypeInitializer
 			newButton = new IconToggleButton(x, y, target.getDisplayName(), target.getImageLoc(), bgDepth, fgDepth);
 			newList.add(newButton);
 			y += newButton.getHeight() + verticalPadding;
-			selectorManager.registerButton(null, newButton);
+			selectorManager.registerButton(new SoundNodePrototype<PhineasSprite>(
+					target.getImageLoc(), target.getSoundLoc()), newButton);
 		}
 		
 		return newList;

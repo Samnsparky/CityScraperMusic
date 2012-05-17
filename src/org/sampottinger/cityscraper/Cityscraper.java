@@ -9,6 +9,7 @@ import org.sampottinger.cityscraper.gui.IconToggleButton;
 import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
 import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.ToggleUnderlineButton;
+import org.sampottinger.cityscraper.gui.WorkspaceRegion;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
 import org.sampottinger.cityscraper.init.DecoratedSlidingCollectionBuilder;
@@ -26,14 +27,18 @@ public class Cityscraper {
 	private static final int HEIGHT = 700;
 	private static final int NODE_SELECTOR_X = 645;
 	private static final int NODE_SELECTOR_Y = 0;
+	private static final int WORKSPACE_WIDTH = 610;
+	private static final int WORKSPACE_HEIGHT = HEIGHT;
 	
 	private static final int BUTTON_FG_DEPTH = PhineasDrawable.DEFAULT_DEPTH;
 	private static final int BUTTON_BG_DEPTH = PhineasDrawable.DEFAULT_DEPTH + 1;
 	
+	@SuppressWarnings("rawtypes")
 	public static void main(String [] args)
 	{
 		NodeTypeBuilder nodeSelectorBuilder;
 		NodeTypeSelectorGUI nodeTypeSelector;
+		WorkspaceRegion workspaceRegion;
 		
 		// Create high level game facade
 		PhineasGameFacade game = PhineasGameFacade.getInstance();
@@ -50,6 +55,10 @@ public class Cityscraper {
 			nodeTypeSelector = nodeSelectorBuilder.createSelector();
 			nodeTypeSelector.showTab(TabType.FLOW);
 			game.addEntity(nodeTypeSelector);
+			
+			// Add workspace region
+			workspaceRegion = new WorkspaceRegion(0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, nodeTypeSelector);
+			game.addEntity(workspaceRegion);
 			
 			game.startGame();
 		}
