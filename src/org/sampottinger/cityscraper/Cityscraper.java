@@ -13,7 +13,7 @@ import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
 import org.sampottinger.cityscraper.init.DecoratedSlidingCollectionBuilder;
 import org.sampottinger.cityscraper.init.NodeTabSelectButtonBuilder;
-import org.sampottinger.cityscraper.init.NodeTypeSelectorBuilder;
+import org.sampottinger.cityscraper.init.NodeTypeBuilder;
 import org.sampottinger.cityscraper.init.SoundNodeTypeInitializer;
 
 /**
@@ -32,7 +32,7 @@ public class Cityscraper {
 	
 	public static void main(String [] args)
 	{
-		NodeTypeSelectorBuilder nodeSelectorBuilder;
+		NodeTypeBuilder nodeSelectorBuilder;
 		NodeTypeSelectorGUI nodeTypeSelector;
 		
 		// Create high level game facade
@@ -45,7 +45,7 @@ public class Cityscraper {
 		try 
 		{	
 			// Create node type selector
-			nodeSelectorBuilder = new NodeTypeSelectorBuilder(NODE_SELECTOR_X, NODE_SELECTOR_Y, HEIGHT, 
+			nodeSelectorBuilder = new NodeTypeBuilder(NODE_SELECTOR_X, NODE_SELECTOR_Y, HEIGHT, 
 					BUTTON_BG_DEPTH, BUTTON_FG_DEPTH, game);
 			nodeTypeSelector = nodeSelectorBuilder.createSelector();
 			nodeTypeSelector.showTab(TabType.FLOW);

@@ -19,11 +19,11 @@ import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
 
 /**
- * Collection of GUI widgets that allow a user to choose what type of
- * node they would like to add to their project
+ * Builder that creates and registers node type prototypes
+ * and the selection buttons / tabs used to choose them
  * @author Sam Pottinger
  */
-public class NodeTypeSelectorBuilder
+public class NodeTypeBuilder
 {
 	private static int DEFAULT_TABS_VERT_OFFSET = 20;
 	private static int DEFAULT_TOGGLE_BUTTONS_HORIZ_OFFSET = 35;
@@ -50,7 +50,7 @@ public class NodeTypeSelectorBuilder
 	 * @param newFGDepth The depth at which button foregrounds should be drawn
 	 * @param newTargetGame The game that this selector will be part of
 	 */
-	public NodeTypeSelectorBuilder(int newX, int newY, int newHeight, int newBGDepth, int newFGDepth,
+	public NodeTypeBuilder(int newX, int newY, int newHeight, int newBGDepth, int newFGDepth,
 			PhineasGameFacade newTargetGame)
 	{
 		// Simple properties
