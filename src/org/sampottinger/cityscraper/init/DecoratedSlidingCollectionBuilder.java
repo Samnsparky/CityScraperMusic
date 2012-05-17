@@ -122,6 +122,7 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		scrubbedSource = new SliderSourceValueScrubber(newScrollingCollection);
 		
 		// Determine if a scrollbar is needed
+		// TODO: This could use to be elucidated
 		if(scrubbedSource.getMaxValue() > 0)
 		{
 			// Create scrollbar
@@ -139,6 +140,7 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		newScrollingRegion = new ScrollResponsiveRegion(scrubbedSource, x, y, scrollRegionWidth, 
 				scrollRegionHeight);
 		
+		// Create sliding collection
 		if(newScrollbar == null)
 		{
 			return new DecoratedSlidingCollection(newScrollingCollection, newScrollingRegion, 

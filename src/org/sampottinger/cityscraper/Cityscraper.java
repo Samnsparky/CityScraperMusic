@@ -14,7 +14,7 @@ import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType
 import org.sampottinger.cityscraper.init.DecoratedSlidingCollectionBuilder;
 import org.sampottinger.cityscraper.init.NodeTabSelectButtonBuilder;
 import org.sampottinger.cityscraper.init.NodeTypeSelectorBuilder;
-import org.sampottinger.cityscraper.init.SoundNodeButtonFactory;
+import org.sampottinger.cityscraper.init.SoundNodeTypeInitializer;
 
 /**
  * Main executable class for the Cityscraper game
