@@ -8,6 +8,7 @@ import org.phineas.core.PhineasCompoundGameObject;
 import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.ToggleButtonListener;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
+import org.sampottinger.cityscraper.nodes.CityScraperNodePrototype;
 
 /**
  * Listener to gui components related to the selection of node types
@@ -17,16 +18,20 @@ public class NodeTypeSelectorGUI implements PhineasCompoundGameObject
 {
 	private Collection<TabRecord> tabs;
 	private NodeTypeSelectorJanitor janitor;
+	private NodeTypeSelectorStateManager stateManager;
 	
 	/**
 	 * Create a new node selector with the given tabs
 	 * @param newTabs The tabs that this node selector should use
 	 * @param newJanitor The janitor to use to interface with the game
+	 * @param newStateManager The manager that handles state of actual node selection toggle
+	 *                     buttons
 	 */
-	public NodeTypeSelectorGUI(NodeTypeSelectorJanitor newJanitor)
+	public NodeTypeSelectorGUI(NodeTypeSelectorJanitor newJanitor, NodeTypeSelectorStateManager newStateManager)
 	{
 		tabs = new ArrayList<TabRecord>();
 		janitor = newJanitor;
+		stateManager = newStateManager;
 	}
 	
 	/**
@@ -73,6 +78,16 @@ public class NodeTypeSelectorGUI implements PhineasCompoundGameObject
 				janitor.addTabContents(tab.getContents());
 			}
 		}
+	}
+	
+	// TODO: Returning null is sooo C++. Either way, we shouldn't do it.
+	/**
+	 * Get the prototype corresponding to the currently selected toggle button
+	 * @return Prototype for selected node type or null if none selected
+	 */
+	public CityScraperNodePrototype getSelectedPrototype()
+	{
+		return stateManager.getSelectedPrototype();
 	}
 
 	@Override

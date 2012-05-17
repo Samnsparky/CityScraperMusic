@@ -34,8 +34,14 @@ public class FlowNodeTypeInitializer implements NodeTypeInitializer
 			int verticalPadding, int bgDepth, int fgDepth,
 			NodeTypeSelectorStateManager selectorManager) throws IOException,
 			PhineasException {
+		
 		Collection<ToggleButton> retVal = new LinkedList<ToggleButton>();
-		retVal.add(new SpawnNodeButton(x, y, bgDepth, fgDepth));
+		
+		SpawnNodeButton spawnNodeButton = new SpawnNodeButton(x, y, bgDepth, fgDepth);
+		
+		retVal.add(spawnNodeButton);
+		selectorManager.registerButton(null, spawnNodeButton);
+		
 		return retVal;
 	}
 }

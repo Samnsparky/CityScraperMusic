@@ -39,17 +39,20 @@ public class MathNodeTypeInitializer implements NodeTypeInitializer
 		
 		int buttonVertSize;
 		Collection<ToggleButton> retVal;
-		ToggleButton previousButton;
+		ToggleButton currentButton;
 		
 		retVal = new LinkedList<ToggleButton>();
 		
 		// TODO: This is pretty messy
-		previousButton = new AddOneNodeButton(x, y, bgDepth, fgDepth);
-		buttonVertSize = previousButton.getHeight();
-		retVal.add(previousButton);
+		currentButton = new AddOneNodeButton(x, y, bgDepth, fgDepth);
+		buttonVertSize = currentButton.getHeight();
+		retVal.add(currentButton);
 		y += buttonVertSize + verticalPadding;
+		selectorManager.registerButton(null, currentButton);
 		
-		retVal.add(new SubtractOneNodeButton(x, y, bgDepth, fgDepth));
+		currentButton = new SubtractOneNodeButton(x, y, bgDepth, fgDepth);
+		retVal.add(currentButton);
+		selectorManager.registerButton(null, currentButton);
 		
 		return retVal;
 		

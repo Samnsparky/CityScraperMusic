@@ -67,6 +67,7 @@ public class SoundNodeTypeInitializer implements NodeTypeInitializer
 			newButton = new IconToggleButton(x, y, target.getDisplayName(), target.getImageLoc(), bgDepth, fgDepth);
 			newList.add(newButton);
 			y += newButton.getHeight() + verticalPadding;
+			selectorManager.registerButton(null, newButton);
 		}
 		
 		return newList;

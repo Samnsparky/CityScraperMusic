@@ -40,20 +40,25 @@ public class LogicNodeTypeInitializer implements NodeTypeInitializer
 		
 		int buttonVertSize;
 		Collection<ToggleButton> retVal;
-		ToggleButton previousButton;
+		ToggleButton currentButton;
 		
 		retVal = new LinkedList<ToggleButton>();
 		
 		// TODO: This is pretty messy
-		previousButton = new EqualGateNodeButton(x, y, bgDepth, fgDepth);
-		buttonVertSize = previousButton.getHeight();
-		retVal.add(previousButton);
+		currentButton = new EqualGateNodeButton(x, y, bgDepth, fgDepth);
+		buttonVertSize = currentButton.getHeight();
+		retVal.add(currentButton);
 		y += buttonVertSize + verticalPadding;
+		selectorManager.registerButton(null, currentButton);
 		
-		retVal.add(new GreaterGateNodeButton(x, y, bgDepth, fgDepth));
+		currentButton = new GreaterGateNodeButton(x, y, bgDepth, fgDepth);
+		retVal.add(currentButton);
 		y += buttonVertSize + verticalPadding;
+		selectorManager.registerButton(null, currentButton);
 		
-		retVal.add(new LessGateNodeButton(x, y, bgDepth, fgDepth));
+		currentButton = new LessGateNodeButton(x, y, bgDepth, fgDepth);
+		retVal.add(currentButton);
+		selectorManager.registerButton(null, currentButton);
 		
 		return retVal;
 		

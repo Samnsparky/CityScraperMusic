@@ -14,6 +14,7 @@ import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorJanitor;
+import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorStateManager;
 import org.sampottinger.cityscraper.gui.nodeselection.TabRecord;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
@@ -86,8 +87,10 @@ public class NodeTypeBuilder
 		TabType currentType;
 		NodeTypeInitializer currentInitializer;
 		NodeTabSelectButtonBuilder tabLabelBuilder;
+		
 		NodeTypeSelectorGUI retVal;
 		NodeTypeSelectorJanitor janitor;
+		NodeTypeSelectorStateManager stateManager;
 		
 		// Initialize helper structures
 		Queue<SimpleImmutableEntry<TabType,NodeTypeInitializer>> buildQueue = 
@@ -96,6 +99,9 @@ public class NodeTypeBuilder
 		
 		// Initialize tab selection button builder
 		tabLabelBuilder = new NodeTabSelectButtonBuilder(x, y + tabsVertOffset);
+		
+		// Initialize state manager
+		stateManager = new NodeTypeSelectorStateManager();
 		
 		// Calculate positions
 		toggleButtonX = x + toggleButtonsHorizOffset;
@@ -118,7 +124,7 @@ public class NodeTypeBuilder
 			currentInitializer = currentPair.getValue();
 			
 			currentButtons = currentInitializer.createAndRegisterButtons(toggleButtonX, y, toggleButtonPadding, 
-					bgDepth, fgDepth, null);
+					bgDepth, fgDepth, stateManager);
 			currentBuilder = new DecoratedSlidingCollectionBuilder<IconToggleButton>(toggleButtonX, 
 					y, scrollBarHorizOffset, SliderDirection.VERTICAL, height, height, currentButtons);
 			currentContents = currentBuilder.createContents();
@@ -128,7 +134,7 @@ public class NodeTypeBuilder
 		
 		// Create node selector
 		janitor = new NodeTypeSelectorJanitor(targetGame);
-		retVal = new NodeTypeSelectorGUI(janitor);
+		retVal = new NodeTypeSelectorGUI(janitor, stateManager);
 		for(TabRecord record : tabRecords)
 			retVal.addTab(record);
 		
