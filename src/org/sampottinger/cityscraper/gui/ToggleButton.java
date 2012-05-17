@@ -21,6 +21,11 @@ public interface ToggleButton extends PhineasBoundable
 	public boolean isActive();
 	
 	/**
+	 * Marks this button as active
+	 */
+	public void activate();
+	
+	/**
 	 * Add a new object to inform when this toggle button's state is changed
 	 * @param newListener The new object to fire events to
 	 */

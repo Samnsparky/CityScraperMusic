@@ -121,17 +121,33 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 				boundsStrategyID, movementStrategyID, targetEntities, slidingDirection, amountActive);
 		scrubbedSource = new SliderSourceValueScrubber(newScrollingCollection);
 		
-		// Create scrollbar
-		scrollBarBuilder = new FittedSlenderSliderBuilder(scrubbedSource, sliderX, sliderY, 
-				travel, amountActive);
-		scrollBarBuilder.setDepth(depth);
-		newScrollbar = scrollBarBuilder.createSlider();
+		// Determine if a scrollbar is needed
+		if(scrubbedSource.getMaxValue() > 0)
+		{
+			// Create scrollbar
+			scrollBarBuilder = new FittedSlenderSliderBuilder(scrubbedSource, sliderX, sliderY, 
+					travel, amountActive);
+			scrollBarBuilder.setDepth(depth);
+			newScrollbar = scrollBarBuilder.createSlider();
+		}
+		else
+		{
+			newScrollbar = null;
+		}
 		
 		// Create scrolling region
 		newScrollingRegion = new ScrollResponsiveRegion(scrubbedSource, x, y, scrollRegionWidth, 
 				scrollRegionHeight);
 		
-		return new DecoratedSlidingCollection(newScrollingCollection, newScrollingRegion, newScrollbar, 
-				(Iterable<Object>) targetEntities);
+		if(newScrollbar == null)
+		{
+			return new DecoratedSlidingCollection(newScrollingCollection, newScrollingRegion, 
+					(Iterable<Object>) targetEntities);
+		}
+		else
+		{
+			return new DecoratedSlidingCollection(newScrollingCollection, newScrollingRegion, newScrollbar, 
+					(Iterable<Object>) targetEntities);
+		}
 	}
 }

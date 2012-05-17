@@ -72,7 +72,7 @@ public class ToggleUnderlineButton extends PhineasSprite implements PhineasHover
 	public void onLeftDown(int relativeX, int relativeY)
 	{
 		if(!activated)
-			activated = true;
+			activate();
 		
 		for(ToggleButtonListener l : listeners)
 			l.onStateChange(this, true);
@@ -143,5 +143,15 @@ public class ToggleUnderlineButton extends PhineasSprite implements PhineasHover
 	public void deattachListener(ToggleButtonListener oldListener)
 	{
 		listeners.remove(oldListener);
+	}
+
+	@Override
+	public void activate()
+	{
+		activated = true;
+		
+		// TODO: need to clean this up
+		try {setImage(activeLoc);} 
+		catch (IOException e) {e.printStackTrace();}
 	}
 }

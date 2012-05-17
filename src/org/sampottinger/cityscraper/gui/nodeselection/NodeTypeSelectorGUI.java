@@ -13,7 +13,7 @@ import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType
  * Listener to gui components related to the selection of node types
  * @author Sam Pottinger
  */
-public class NodeTypeSelector implements PhineasCompoundGameObject
+public class NodeTypeSelectorGUI implements PhineasCompoundGameObject
 {
 	private Collection<TabRecord> tabs;
 	private NodeTypeSelectorJanitor janitor;
@@ -23,7 +23,7 @@ public class NodeTypeSelector implements PhineasCompoundGameObject
 	 * @param newTabs The tabs that this node selector should use
 	 * @param newJanitor The janitor to use to interface with the game
 	 */
-	public NodeTypeSelector(NodeTypeSelectorJanitor newJanitor)
+	public NodeTypeSelectorGUI(NodeTypeSelectorJanitor newJanitor)
 	{
 		tabs = new ArrayList<TabRecord>();
 		janitor = newJanitor;
@@ -69,6 +69,7 @@ public class NodeTypeSelector implements PhineasCompoundGameObject
 			}
 			else
 			{
+				currentButton.activate();
 				janitor.addTabContents(tab.getContents());
 			}
 		}

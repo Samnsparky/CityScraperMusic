@@ -9,7 +9,8 @@ import org.sampottinger.cityscraper.gui.IconToggleButton;
 import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
 import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.ToggleUnderlineButton;
-import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelector;
+import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
+import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
 import org.sampottinger.cityscraper.init.DecoratedSlidingCollectionBuilder;
 import org.sampottinger.cityscraper.init.NodeTabSelectButtonBuilder;
 import org.sampottinger.cityscraper.init.NodeTypeSelectorBuilder;
@@ -32,7 +33,7 @@ public class Cityscraper {
 	public static void main(String [] args)
 	{
 		NodeTypeSelectorBuilder nodeSelectorBuilder;
-		NodeTypeSelector nodeTypeSelector;
+		NodeTypeSelectorGUI nodeTypeSelector;
 		
 		// Create high level game facade
 		PhineasGameFacade game = PhineasGameFacade.getInstance();
@@ -47,6 +48,7 @@ public class Cityscraper {
 			nodeSelectorBuilder = new NodeTypeSelectorBuilder(NODE_SELECTOR_X, NODE_SELECTOR_Y, HEIGHT, 
 					BUTTON_BG_DEPTH, BUTTON_FG_DEPTH, game);
 			nodeTypeSelector = nodeSelectorBuilder.createSelector();
+			nodeTypeSelector.showTab(TabType.FLOW);
 			game.addEntity(nodeTypeSelector);
 			
 			game.startGame();

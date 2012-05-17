@@ -13,7 +13,7 @@ public class GreaterGateNodeButton extends IconToggleButton
 {
 
 	private static final String TEXT = "fltr greater";
-	private static final String ICON_LOC = "img/less_gate.png";
+	private static final String ICON_LOC = "img/larger_gate.png";
 
 	public GreaterGateNodeButton(int newX, int newY, int newBackgroundDepth, int newForegroundDepth) throws IOException,
 			PhineasException

@@ -10,7 +10,7 @@ import org.sampottinger.cityscraper.gui.DecoratedSlidingCollection;
 import org.sampottinger.cityscraper.gui.IconToggleButton;
 import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
-import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelector;
+import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorJanitor;
 import org.sampottinger.cityscraper.gui.nodeselection.SpawnNodeButton;
 import org.sampottinger.cityscraper.gui.nodeselection.TabRecord;
@@ -26,7 +26,7 @@ public class NodeTypeSelectorBuilder
 	private static int DEFAULT_TABS_VERT_OFFSET = 20;
 	private static int DEFAULT_TOGGLE_BUTTONS_HORIZ_OFFSET = 35;
 	private static int DEFAULT_TOGGLE_BUTTON_PADDING = 7;
-	private static int DEFAULT_SCROLL_BAR_HORIZ_OFFSET = 145;
+	private static int DEFAULT_SCROLL_BAR_HORIZ_OFFSET = 105;
 	
 	private int x;
 	private int y;
@@ -72,13 +72,13 @@ public class NodeTypeSelectorBuilder
 	 * @throws IOException Thrown if an image could not be found
 	 * @throws PhineasException Thrown if image corrupted
 	 */
-	public NodeTypeSelector createSelector() throws IOException, PhineasException
+	public NodeTypeSelectorGUI createSelector() throws IOException, PhineasException
 	{
 		// TODO: This is a really messy method and should be cleaned up
 		
 		int toggleButtonX;
 		
-		NodeTypeSelector retVal;
+		NodeTypeSelectorGUI retVal;
 		NodeTypeSelectorJanitor janitor;
 		
 		Collection<TabRecord> tabRecords;
@@ -160,7 +160,7 @@ public class NodeTypeSelectorBuilder
 		
 		// Create node selector
 		janitor = new NodeTypeSelectorJanitor(targetGame);
-		retVal = new NodeTypeSelector(janitor);
+		retVal = new NodeTypeSelectorGUI(janitor);
 		for(TabRecord record : tabRecords)
 			retVal.addTab(record);
 		

@@ -130,7 +130,7 @@ PhineasCompoundGameObject, PhineasPlaceable
 	@Override
 	public void onLeftDown(int relativeX, int relativeY)
 	{
-		active = true;
+		activate();
 		targetRectangle.setColor(ACTIVE_COLOR);
 		
 		for(ToggleButtonListener listener : listeners)
@@ -195,5 +195,12 @@ PhineasCompoundGameObject, PhineasPlaceable
 	public void deattachListener(ToggleButtonListener oldListener)
 	{
 		listeners.remove(oldListener);
+	}
+
+	@Override
+	public void activate() 
+	{
+		active = true;
+		targetRectangle.setColor(HOVER_COLOR);
 	}
 }

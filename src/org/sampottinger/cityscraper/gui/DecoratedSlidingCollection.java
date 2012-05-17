@@ -27,6 +27,23 @@ public class DecoratedSlidingCollection implements PhineasCompoundGameObject
 	 */
 	@SuppressWarnings("rawtypes")
 	public DecoratedSlidingCollection(ScrollingCollection newScrollingCollection, ScrollResponsiveRegion newScrollingRegion,
+			Iterable<Object> newEntities)
+	{
+		scrollingCollection = newScrollingCollection;
+		scrollingRegion = newScrollingRegion;
+		entities = newEntities;
+		scrollbar = null;
+	}
+	
+	/**
+	 * Creates a new node contents set with the given values
+	 * @param newScrollingCollection Object collection that moves under the command of a SlenderSlider
+	 * @param newScrollingRegion The scroll wheel aware region that can also scroll objects
+	 * @param newScrollbar The actual scrollbar for scrolling the scroll collection
+	 * @param newEntities The actual elements that are being scrolled through
+	 */
+	@SuppressWarnings("rawtypes")
+	public DecoratedSlidingCollection(ScrollingCollection newScrollingCollection, ScrollResponsiveRegion newScrollingRegion,
 			SlenderSlider newScrollbar, Iterable<Object> newEntities)
 	{
 		scrollingCollection = newScrollingCollection;
@@ -42,7 +59,9 @@ public class DecoratedSlidingCollection implements PhineasCompoundGameObject
 		
 		retVal.add(scrollingCollection);
 		retVal.add(scrollingRegion);
-		retVal.add(scrollbar);
+		
+		if(scrollbar != null)
+			retVal.add(scrollbar);
 		
 		for(Object o : entities)
 			retVal.add(o);
