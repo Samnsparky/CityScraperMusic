@@ -10,6 +10,8 @@ import org.sampottinger.cityscraper.gui.nodeselection.EqualGateNodeButton;
 import org.sampottinger.cityscraper.gui.nodeselection.GreaterGateNodeButton;
 import org.sampottinger.cityscraper.gui.nodeselection.LessGateNodeButton;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorStateManager;
+import org.sampottinger.cityscraper.nodes.SpecialNodePrototype;
+import org.sampottinger.cityscraper.nodes.SpecialNodePrototype.SpecialNodeType;
 
 /**
  * Factory that builds logic toggle buttons for the node type selection component
@@ -32,6 +34,7 @@ public class LogicNodeTypeInitializer implements NodeTypeInitializer
 		return instance;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Iterable<ToggleButton> createAndRegisterButtons(int x, int y,
 			int verticalPadding, int bgDepth, int fgDepth,
@@ -49,16 +52,16 @@ public class LogicNodeTypeInitializer implements NodeTypeInitializer
 		buttonVertSize = currentButton.getHeight();
 		retVal.add(currentButton);
 		y += buttonVertSize + verticalPadding;
-		selectorManager.registerButton(null, currentButton);
+		selectorManager.registerButton(new SpecialNodePrototype(SpecialNodeType.EQUAL_GATE), currentButton);
 		
 		currentButton = new GreaterGateNodeButton(x, y, bgDepth, fgDepth);
 		retVal.add(currentButton);
 		y += buttonVertSize + verticalPadding;
-		selectorManager.registerButton(null, currentButton);
+		selectorManager.registerButton(new SpecialNodePrototype(SpecialNodeType.GREATER_GATE), currentButton);
 		
 		currentButton = new LessGateNodeButton(x, y, bgDepth, fgDepth);
 		retVal.add(currentButton);
-		selectorManager.registerButton(null, currentButton);
+		selectorManager.registerButton(new SpecialNodePrototype(SpecialNodeType.LESS_GATE), currentButton);
 		
 		return retVal;
 		

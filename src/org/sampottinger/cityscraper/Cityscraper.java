@@ -4,18 +4,10 @@ import java.io.IOException;
 import org.phineas.core.PhineasDrawable;
 import org.phineas.core.PhineasException;
 import org.phineas.core.PhineasGameFacade;
-import org.sampottinger.cityscraper.gui.DecoratedSlidingCollection;
-import org.sampottinger.cityscraper.gui.IconToggleButton;
-import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
-import org.sampottinger.cityscraper.gui.ToggleButton;
-import org.sampottinger.cityscraper.gui.ToggleUnderlineButton;
 import org.sampottinger.cityscraper.gui.WorkspaceRegion;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
-import org.sampottinger.cityscraper.init.DecoratedSlidingCollectionBuilder;
-import org.sampottinger.cityscraper.init.NodeTabSelectButtonBuilder;
 import org.sampottinger.cityscraper.init.NodeTypeBuilder;
-import org.sampottinger.cityscraper.init.SoundNodeTypeInitializer;
 
 /**
  * Main executable class for the Cityscraper game

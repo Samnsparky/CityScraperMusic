@@ -8,6 +8,8 @@ import org.phineas.core.PhineasException;
 import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorStateManager;
 import org.sampottinger.cityscraper.gui.nodeselection.SpawnNodeButton;
+import org.sampottinger.cityscraper.nodes.SpecialNodePrototype;
+import org.sampottinger.cityscraper.nodes.SpecialNodePrototype.SpecialNodeType;
 
 /**
  * Factory for flow node prototypes and their selection buttons
@@ -29,6 +31,7 @@ public class FlowNodeTypeInitializer implements NodeTypeInitializer
 		return instance;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Iterable<ToggleButton> createAndRegisterButtons(int x, int y,
 			int verticalPadding, int bgDepth, int fgDepth,
@@ -40,7 +43,7 @@ public class FlowNodeTypeInitializer implements NodeTypeInitializer
 		SpawnNodeButton spawnNodeButton = new SpawnNodeButton(x, y, bgDepth, fgDepth);
 		
 		retVal.add(spawnNodeButton);
-		selectorManager.registerButton(null, spawnNodeButton);
+		selectorManager.registerButton(new SpecialNodePrototype(SpecialNodeType.SPAWN_NODE), spawnNodeButton);
 		
 		return retVal;
 	}

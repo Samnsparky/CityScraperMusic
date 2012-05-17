@@ -9,6 +9,8 @@ import org.sampottinger.cityscraper.gui.ToggleButton;
 import org.sampottinger.cityscraper.gui.nodeselection.AddOneNodeButton;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorStateManager;
 import org.sampottinger.cityscraper.gui.nodeselection.SubtractOneNodeButton;
+import org.sampottinger.cityscraper.nodes.SpecialNodePrototype;
+import org.sampottinger.cityscraper.nodes.SpecialNodePrototype.SpecialNodeType;
 
 /**
  * Factory that builds math toggle buttons for the node type selection component
@@ -31,6 +33,7 @@ public class MathNodeTypeInitializer implements NodeTypeInitializer
 		return instance;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Iterable<ToggleButton> createAndRegisterButtons(int x, int y,
 			int verticalPadding, int bgDepth, int fgDepth,
@@ -48,11 +51,11 @@ public class MathNodeTypeInitializer implements NodeTypeInitializer
 		buttonVertSize = currentButton.getHeight();
 		retVal.add(currentButton);
 		y += buttonVertSize + verticalPadding;
-		selectorManager.registerButton(null, currentButton);
+		selectorManager.registerButton(new SpecialNodePrototype(SpecialNodeType.ADD_ONE), currentButton);
 		
 		currentButton = new SubtractOneNodeButton(x, y, bgDepth, fgDepth);
 		retVal.add(currentButton);
-		selectorManager.registerButton(null, currentButton);
+		selectorManager.registerButton(new SpecialNodePrototype(SpecialNodeType.SUB_ONE), currentButton);
 		
 		return retVal;
 		
