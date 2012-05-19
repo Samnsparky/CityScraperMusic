@@ -1,6 +1,9 @@
 package org.sampottinger.cityscraper.nodes;
 
-public interface CityScraperNode
+import org.phineas.core.PhineasDrawable;
+import org.sampottinger.cityscraper.WorkspaceElement;
+
+public interface CityScraperNode extends WorkspaceElement, PhineasDrawable
 {
 
 }

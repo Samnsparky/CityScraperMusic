@@ -20,12 +20,16 @@ public class SpecialNodePrototype<T extends PhineasPlaceable & PhineasBoundable 
 	private static final int DEFAULT_Y = 0;
 	
 	private T icon;
+	private SpecialNodeType nodeType;
 	
 	@SuppressWarnings("unchecked")
 	public SpecialNodePrototype(SpecialNodeType type) throws IOException
 	{
 		// Assign icon
 		icon = (T) new PhineasSprite(DEFAULT_X, DEFAULT_Y, SpecialNodeImgLocResolver.getInstance().getLoc(type));
+		
+		// Save type for later
+		nodeType = type;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -33,5 +37,21 @@ public class SpecialNodePrototype<T extends PhineasPlaceable & PhineasBoundable 
 	public T getPreview() 
 	{
 		return (T) icon;
+	}
+
+	@Override
+	public CityScraperNode createNode(int x, int y) throws IOException 
+	{
+		switch(nodeType)
+		{
+		case ADD_ONE: return new AddOneNode(x, y);
+		case EQUAL_GATE: return new EqualGateNode(x, y);
+		case GREATER_GATE: return new GreaterGateNode(x, y);
+		case LESS_GATE: return new LessGateNode(x, y);
+		case SPAWN_NODE: return new SpawnNode(x, y);
+		case SUB_ONE: return new SubtractOneNode(x, y);
+		default:
+			throw new RuntimeException("Invalid node type specified.");
+		}
 	}
 }

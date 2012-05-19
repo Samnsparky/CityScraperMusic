@@ -21,6 +21,8 @@ public class Cityscraper {
 	private static final int NODE_SELECTOR_Y = 0;
 	private static final int WORKSPACE_WIDTH = 610;
 	private static final int WORKSPACE_HEIGHT = HEIGHT;
+	private static final int X_DISCRETE_STEP = 16;
+	private static final int Y_DISCRETE_STEP = 16;
 	
 	private static final int BUTTON_FG_DEPTH = PhineasDrawable.DEFAULT_DEPTH;
 	private static final int BUTTON_BG_DEPTH = PhineasDrawable.DEFAULT_DEPTH + 1;
@@ -30,6 +32,8 @@ public class Cityscraper {
 	{
 		NodeTypeBuilder nodeSelectorBuilder;
 		NodeTypeSelectorGUI nodeTypeSelector;
+		WorkspaceGrid workspaceGrid;
+		WorkspaceManager workspaceManager;
 		WorkspaceRegion workspaceRegion;
 		
 		// Create high level game facade
@@ -48,8 +52,15 @@ public class Cityscraper {
 			nodeTypeSelector.showTab(TabType.FLOW);
 			game.addEntity(nodeTypeSelector);
 			
+			// Create occupancy grid
+			workspaceGrid = new WorkspaceGrid(X_DISCRETE_STEP, Y_DISCRETE_STEP);
+			
+			// Create workspace manager
+			workspaceManager = new WorkspaceManager(workspaceGrid, game);
+			
 			// Add workspace region
-			workspaceRegion = new WorkspaceRegion(0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, nodeTypeSelector);
+			workspaceRegion = new WorkspaceRegion(0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, nodeTypeSelector, 
+					workspaceManager, X_DISCRETE_STEP, Y_DISCRETE_STEP);
 			game.addEntity(workspaceRegion);
 			
 			game.startGame();
