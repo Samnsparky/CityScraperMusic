@@ -1,12 +1,10 @@
-package org.sampottinger.cityscraper;
+package org.sampottinger.cityscraper.workspace;
 
-import java.util.AbstractMap;
-import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.phineas.core.PhineasBoundable;
+import org.sampottinger.cityscraper.SimpleCoordinatePair;
 
 /**
  * Data structure managing free and occupied spaces in the workspace grid
@@ -14,7 +12,7 @@ import org.phineas.core.PhineasBoundable;
  */
 public class WorkspaceGrid
 {
-	private AbstractMap<SimpleImmutableEntry<Integer, Integer>, WorkspaceElement> occupancyGrid;
+	private TwoDimensionalWorkspaceElementMap occupancyGrid;
 	private int xStep;
 	private int yStep;
 	
@@ -24,9 +22,9 @@ public class WorkspaceGrid
 	 * @param newXStep The horizontal size of one of the discrete state spaces
 	 * @param newYStep The vertical size of one of the discrete state spaces
 	 */
-	public WorkspaceGrid(int newXStep, int newYStep)
+	public WorkspaceGrid(int startX, int startY, int width, int height, int newXStep, int newYStep)
 	{
-		occupancyGrid = new HashMap<SimpleImmutableEntry<Integer, Integer>, WorkspaceElement>();
+		occupancyGrid = new TwoDimensionalWorkspaceElementMap(startX, startY, width, height);
 		xStep = newXStep;
 		yStep = newYStep;
 	}
@@ -37,9 +35,9 @@ public class WorkspaceGrid
 	 */
 	public void markOccupied(WorkspaceElement newElement)
 	{
-		Iterable<SimpleImmutableEntry<Integer, Integer>> occupiedSpaces = getSpacesOccupiedBy(newElement);
-		for(SimpleImmutableEntry<Integer, Integer> pos : occupiedSpaces)
-			occupancyGrid.put(pos, newElement);
+		Iterable<SimpleCoordinatePair> occupiedSpaces = getSpacesOccupiedBy(newElement);
+		for(SimpleCoordinatePair pos : occupiedSpaces)
+			occupancyGrid.put(pos.getX(), pos.getY(), newElement);
 	}
 	
 	/**
@@ -49,10 +47,8 @@ public class WorkspaceGrid
 	 * @return true if already occupied and false otherwise
 	 */
 	public boolean isOccupied(int x, int y)
-	{
-		SimpleImmutableEntry<Integer, Integer> pos = new SimpleImmutableEntry<Integer, Integer>(x, y);
-		
-		return occupancyGrid.containsKey(pos);
+	{	
+		return occupancyGrid.containsKey(convertXPos(x), convertYPos(y));
 	}
 	
 	/**
@@ -63,11 +59,11 @@ public class WorkspaceGrid
 	 */
 	public boolean isOccupied(PhineasBoundable element)
 	{
-		Iterable<SimpleImmutableEntry<Integer, Integer>> occupiedSpaces = getSpacesOccupiedBy(element);
-		for(SimpleImmutableEntry<Integer, Integer> pos : occupiedSpaces)
+		Iterable<SimpleCoordinatePair> occupiedSpaces = getSpacesOccupiedBy(element);
+		for(SimpleCoordinatePair pos : occupiedSpaces)
 		{
 			// TODO: OK, that is a shameful kludge. Key is x and value is y... Not ok.
-			if(isOccupied(pos.getKey(), pos.getValue()))
+			if(isOccupied(pos.getX(), pos.getY()))
 				return true;
 		}
 		return false;
@@ -79,9 +75,9 @@ public class WorkspaceGrid
 	 */
 	public void markUnoccupied(PhineasBoundable oldElement)
 	{
-		Iterable<SimpleImmutableEntry<Integer, Integer>> occupiedSpaces = getSpacesOccupiedBy(oldElement);
-		for(SimpleImmutableEntry<Integer, Integer> pos : occupiedSpaces)
-			occupancyGrid.remove(pos);
+		Iterable<SimpleCoordinatePair> occupiedSpaces = getSpacesOccupiedBy(oldElement);
+		for(SimpleCoordinatePair pos : occupiedSpaces)
+			occupancyGrid.remove(pos.getX(), pos.getY());
 	}
 	
 	/**
@@ -115,9 +111,9 @@ public class WorkspaceGrid
 	 * @return Iterable over pairs of spaces' x and y coordinate values that the given element
 	 *                  spans over
 	 */
-	private Iterable<SimpleImmutableEntry<Integer, Integer>> getSpacesOccupiedBy(PhineasBoundable newElement)
+	public Collection<SimpleCoordinatePair> getSpacesOccupiedBy(PhineasBoundable newElement)
 	{
-		Collection<SimpleImmutableEntry<Integer, Integer>> retList;
+		Collection<SimpleCoordinatePair> retList;
 		int rawX;
 		int rawY;
 		int fixedX;
@@ -130,7 +126,7 @@ public class WorkspaceGrid
 		int fixedMaxY;
 		
 		// Allocate for return value
-		retList = new LinkedList<SimpleImmutableEntry<Integer, Integer>>();
+		retList = new LinkedList<SimpleCoordinatePair>();
 		
 		// Get position of nearest fitting space
 		rawX = newElement.getX();
@@ -149,10 +145,31 @@ public class WorkspaceGrid
 		{
 			for(curY = fixedY; curY < fixedMaxY; curY+=yStep)
 			{
-				retList.add(new SimpleImmutableEntry<Integer, Integer>(curX, curY));
+				retList.add(new SimpleCoordinatePair(curX, curY));
 			}
 		}
 		
 		return retList;
+	}
+	
+	/**
+	 * Get the element at the given position
+	 * @param x The x position of the space whose occupant is desired
+	 * @param y The y position of the space whose occupant is desired
+	 * @return The element at the given position or null if none there
+	 */
+	public WorkspaceElement getElementAt(int x, int y)
+	{
+		return occupancyGrid.get(x, y);
+	}
+	
+	public int getXStep()
+	{
+		return xStep;
+	}
+	
+	public int getYStep()
+	{
+		return yStep;
 	}
 }

@@ -8,6 +8,8 @@ import org.sampottinger.cityscraper.gui.WorkspaceRegion;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
 import org.sampottinger.cityscraper.init.NodeTypeBuilder;
+import org.sampottinger.cityscraper.workspace.WorkspaceGrid;
+import org.sampottinger.cityscraper.workspace.WorkspaceManager;
 
 /**
  * Main executable class for the Cityscraper game
@@ -53,10 +55,10 @@ public class Cityscraper {
 			game.addEntity(nodeTypeSelector);
 			
 			// Create occupancy grid
-			workspaceGrid = new WorkspaceGrid(X_DISCRETE_STEP, Y_DISCRETE_STEP);
+			workspaceGrid = new WorkspaceGrid(0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, X_DISCRETE_STEP, Y_DISCRETE_STEP);
 			
 			// Create workspace manager
-			workspaceManager = new WorkspaceManager(workspaceGrid, game);
+			workspaceManager = new WorkspaceManager(workspaceGrid, game, 0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT);
 			
 			// Add workspace region
 			workspaceRegion = new WorkspaceRegion(0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, nodeTypeSelector, 

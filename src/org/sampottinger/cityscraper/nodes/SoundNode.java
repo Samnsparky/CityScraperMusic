@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import org.phineas.core.PhineasBoundable;
 import org.phineas.core.PhineasDrawable;
+import org.sampottinger.cityscraper.workspace.WorkspaceElement;
 
 /**
  * Decorator around a boundable drawable that adds sound capabilities to it
@@ -11,6 +12,9 @@ import org.phineas.core.PhineasDrawable;
  */
 public class SoundNode<T extends PhineasBoundable & PhineasDrawable> implements CityScraperNode
 {
+
+	private SimpleNodeRecordHelper recordHelper = new SimpleNodeRecordHelper();
+	
 	
 	private T innards;
 	
@@ -57,6 +61,42 @@ public class SoundNode<T extends PhineasBoundable & PhineasDrawable> implements 
 	public int getHeight()
 	{
 		return innards.getHeight();
+	}
+	
+	@Override
+	public void addNext(WorkspaceElement lastElement)
+	{
+		recordHelper.addNext(lastElement);
+	}
+
+	@Override
+	public void removeNext(WorkspaceElement element)
+	{
+		recordHelper.removeNext(element);
+	}
+
+	@Override
+	public Iterable<WorkspaceElement> getNextElements()
+	{
+		return recordHelper.getNextElements();
+	}
+
+	@Override
+	public void addPrevious(WorkspaceElement element)
+	{
+		recordHelper.addPrevious(element);
+	}
+
+	@Override
+	public void removePrevious(WorkspaceElement element)
+	{
+		recordHelper.removePrevious(element);
+	}
+
+	@Override
+	public Iterable<WorkspaceElement> getPreviousElements()
+	{
+		return recordHelper.getPreviousElements();
 	}
 
 }

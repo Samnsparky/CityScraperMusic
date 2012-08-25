@@ -1,18 +1,24 @@
 package org.sampottinger.cityscraper.gui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
+import org.phineas.contrib.PhineasLine;
 import org.phineas.core.PhineasBoundable;
 import org.phineas.core.PhineasClickListener;
 import org.phineas.core.PhineasDrawable;
 import org.phineas.core.PhineasGlobalMouseMovementListener;
 import org.phineas.core.PhineasHoverListener;
+import org.phineas.core.PhineasLocateable;
 import org.phineas.core.PhineasPlaceable;
-import org.sampottinger.cityscraper.WorkspaceManager;
+import org.sampottinger.cityscraper.connection.NodePathFinder;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.nodes.CityScraperNode;
 import org.sampottinger.cityscraper.nodes.CityScraperNodePrototype;
+import org.sampottinger.cityscraper.nodes.ConnectorNode;
+import org.sampottinger.cityscraper.workspace.WorkspaceElement;
+import org.sampottinger.cityscraper.workspace.WorkspaceManager;
 
 /**
  * Hoverable region where new nodes can be placed
@@ -34,8 +40,10 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	private boolean active;
 	private T preview;
 	private WorkspaceManager workspaceManager;
-	int xStep;
-	int yStep;
+	private int xStep;
+	private int yStep;
+	private boolean drawingLine;
+	private WorkspaceElement startingElement;
 	
 	/**
 	 * Creates a new region in which new nodes can be placed by clicking
@@ -110,6 +118,20 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	{
 		return position - ((position - minRegion) % discreteStep);
 	}
+	
+	/**
+	 * Create the currently selected node type at the preview coordinates
+	 * @return Newly created element
+	 */
+	private CityScraperNode createPreviewElement()
+	{
+		CityScraperNodePrototype currentPrototype = nodeTypeSelector.getSelectedPrototype();
+		CityScraperNode newNode;
+		try { newNode = currentPrototype.createNode(previewX, previewY); } 
+		catch (IOException e) { throw new RuntimeException("Failed to load node image."); }
+		workspaceManager.createElement(newNode);
+		return newNode;
+	}
 
 	@Override
 	public int getX() 
@@ -162,6 +184,8 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	@Override
 	public void draw(Graphics2D target) 
 	{
+		int previewMidX;
+		int previewMidY;
 		CityScraperNodePrototype currentPrototype = nodeTypeSelector.getSelectedPrototype();
 		
 		// End if there is nothing selected
@@ -170,13 +194,32 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 		
 		// Get preview
 		preview = currentPrototype.getPreview();
+		
+		// Get midpoints
+		previewMidX = previewX + preview.getWidth() / 2;
+		previewMidY = previewY + preview.getHeight() / 2;
 				
 		// If a preview is available, draw it
 		if(active && preview != null)
 		{
 			preview.setX(previewX);
 			preview.setY(previewY);
-			preview.draw(target);
+			
+			if(!workspaceManager.isOccupied(preview))
+				preview.draw(target);
+		}
+		
+		// Draw line if dragging line between nodes
+		if(drawingLine)
+		{
+			PhineasLine line = new PhineasLine(
+					startingElement.getX() + startingElement.getWidth() / 2,
+					startingElement.getY() + startingElement.getHeight() / 2,
+					previewMidX,
+					previewMidY,
+					Color.WHITE
+			);
+			line.draw(target);
 		}
 	}
 
@@ -189,20 +232,67 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	@Override
 	public void onLeftDown(int relativeX, int relativeY)
 	{
-		// TODO Auto-generated method stub
+		// If the gesture starts on an existing element, a line is being drawn
+		// Otherwise an object is being placed
+		drawingLine = !workspaceManager.isFree(previewX, previewY);
 		
+		if(drawingLine)
+			startingElement = workspaceManager.getElementAt(previewX, previewY);
 	}
 
 	@Override
 	public void onLeftRelease(int relativeX, int relativeY)
 	{
-		CityScraperNodePrototype currentPrototype = nodeTypeSelector.getSelectedPrototype();
-		CityScraperNode newNode;
-		try {
-			newNode = currentPrototype.createNode(previewX, previewY);
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to load node image.");
+		WorkspaceElement endElement;
+		Iterable<PhineasLocateable> path;
+
+		if(drawingLine)
+		{
+			drawingLine = false;
+			PhineasBoundable stepBounds = workspaceManager.getStepBounds();
+
+			// See if we are connecting with an existing element
+			if(!workspaceManager.isOccupied(preview))
+				endElement = createPreviewElement();
+			else // Otherwise, create new element at position and connect
+				endElement = workspaceManager.getElementAt(previewX, previewY);
+			
+			path = NodePathFinder.getInstance().findPath(startingElement, endElement, workspaceManager);
+			
+			if(path != null)
+			{
+				createPath(
+						startingElement,
+						endElement,
+						path,
+						stepBounds.getWidth(),
+						stepBounds.getHeight()
+				);
+			}
 		}
-		workspaceManager.createElement(newNode);
+		else
+		{
+			if(!workspaceManager.isOccupied(preview))
+				createPreviewElement();
+		}
+	}
+
+	private void createPath(WorkspaceElement start, WorkspaceElement end, Iterable<PhineasLocateable> pathLocations,
+			int stepWidth, int stepHeight)
+	{
+		ConnectorNode newConnection;
+		WorkspaceElement lastElement = start;
+		
+		for(PhineasLocateable curPos : pathLocations)
+		{
+			newConnection = new ConnectorNode(curPos.getX(), curPos.getY(), stepWidth, stepHeight);
+			workspaceManager.createElement(newConnection);
+			newConnection.addPrevious(lastElement);
+			lastElement.addNext(newConnection);
+			lastElement = newConnection;
+		}
+		
+		end.addPrevious(lastElement);
+		lastElement.addNext(end);
 	}
 }
