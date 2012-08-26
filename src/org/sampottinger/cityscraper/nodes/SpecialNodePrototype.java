@@ -8,13 +8,15 @@ import org.phineas.core.PhineasDrawable;
 import org.phineas.core.PhineasPlaceable;
 
 /**
- * Prototype for non-sound nodes
+ * Prototype for non-sound nodes.
  * @author Sam Pottinger
  */
-public class SpecialNodePrototype<T extends PhineasPlaceable & PhineasBoundable & PhineasDrawable>
+public class SpecialNodePrototype
+	<T extends PhineasPlaceable & PhineasBoundable & PhineasDrawable>
 	implements CityScraperNodePrototype
 {
-	public enum SpecialNodeType { ADD_ONE, EQUAL_GATE, GREATER_GATE, LESS_GATE, SPAWN_NODE, SUB_ONE }
+	public enum SpecialNodeType { ADD_ONE, EQUAL_GATE, GREATER_GATE, LESS_GATE,
+		SPAWN_NODE, SUB_ONE }
 	
 	private static final int DEFAULT_X = 0;
 	private static final int DEFAULT_Y = 0;
@@ -22,11 +24,17 @@ public class SpecialNodePrototype<T extends PhineasPlaceable & PhineasBoundable 
 	private T icon;
 	private SpecialNodeType nodeType;
 	
+	/**
+	 * Create a new non-sound node prototype.
+	 * @param type The SpecialNodeType descriptor for this node type.
+	 * @throws IOException Raise if the image for that node can not be found.
+	 */
 	@SuppressWarnings("unchecked")
 	public SpecialNodePrototype(SpecialNodeType type) throws IOException
 	{
 		// Assign icon
-		icon = (T) new PhineasSprite(DEFAULT_X, DEFAULT_Y, SpecialNodeImgLocResolver.getInstance().getLoc(type));
+		icon = (T) new PhineasSprite(DEFAULT_X, DEFAULT_Y,
+				SpecialNodeImgLocResolver.getInstance().getLoc(type));
 		
 		// Save type for later
 		nodeType = type;
@@ -36,7 +44,7 @@ public class SpecialNodePrototype<T extends PhineasPlaceable & PhineasBoundable 
 	@Override
 	public T getPreview() 
 	{
-		return (T) icon;
+		return icon;
 	}
 
 	@Override

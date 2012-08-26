@@ -12,12 +12,12 @@ import org.sampottinger.cityscraper.nodes.SpecialNodePrototype;
 import org.sampottinger.cityscraper.nodes.SpecialNodePrototype.SpecialNodeType;
 
 /**
- * Factory for flow node prototypes and their selection buttons
+ * Factory for flow node prototypes and their selection buttons.
  * @author Sam Pottinger
  */
 public class FlowNodeTypeInitializer implements NodeTypeInitializer
 {
-	private static FlowNodeTypeInitializer instance = null;
+	private static FlowNodeTypeInitializer instance;
 	
 	private FlowNodeTypeInitializer() {}
 	
@@ -40,10 +40,14 @@ public class FlowNodeTypeInitializer implements NodeTypeInitializer
 		
 		Collection<ToggleButton> retVal = new LinkedList<ToggleButton>();
 		
-		SpawnNodeButton spawnNodeButton = new SpawnNodeButton(x, y, bgDepth, fgDepth);
+		SpawnNodeButton spawnNodeButton = new SpawnNodeButton(x, y, bgDepth,
+				fgDepth);
 		
 		retVal.add(spawnNodeButton);
-		selectorManager.registerButton(new SpecialNodePrototype(SpecialNodeType.SPAWN_NODE), spawnNodeButton);
+		selectorManager.registerButton(
+				new SpecialNodePrototype(SpecialNodeType.SPAWN_NODE), 
+				spawnNodeButton
+		);
 		
 		return retVal;
 	}

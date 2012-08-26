@@ -3,8 +3,11 @@ package org.sampottinger.cityscraper.gui;
 import org.phineas.core.PhineasBoundable;
 
 /**
+ * Interface for toggle button for Phineas-based games / components.
+ * 
  * Button that can be depressed by a user and will stay
- * depressed until unset by the program
+ * depressed until un-set by the program.
+ * 
  * @author Sam Pottinger
  */
 public interface ToggleButton extends PhineasBoundable
@@ -32,7 +35,7 @@ public interface ToggleButton extends PhineasBoundable
 	public void attachListener(ToggleButtonListener newListener);
 	
 	/**
-	 * Removes an object such that it will no longer be inforedm when this 
+	 * Removes an object such that it will no longer be informed when this 
 	 * toggle button's state is changed
 	 * @param oldListener The new object to stop firing events to
 	 */

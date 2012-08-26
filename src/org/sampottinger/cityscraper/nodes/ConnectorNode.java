@@ -57,13 +57,25 @@ public class ConnectorNode implements CityScraperNode
 		
 		// Draw connection lines
 		if(otherMaxX <= minX) // If left
-			drawableComponents.add(new PhineasLine(getX(), centerY, centerX, centerY, Color.BLUE));
+		{
+			drawableComponents.add(new PhineasLine(getX(), centerY, centerX,
+					centerY, Color.BLUE));
+		}
 		else if(otherMinX >= maxX) // If right
-			drawableComponents.add(new PhineasLine(getX() + getWidth(), centerY, centerX, centerY, Color.BLUE));
+		{
+			drawableComponents.add(new PhineasLine(getX() + getWidth(),
+					centerY, centerX, centerY, Color.BLUE));
+		}
 		else if(otherMinY <= minY) // If above
-			drawableComponents.add(new PhineasLine(centerX, getY(), centerX, centerY, Color.BLUE));
+		{
+			drawableComponents.add(new PhineasLine(centerX, getY(), centerX,
+					centerY, Color.BLUE));
+		}
 		else if(otherMaxY >= maxY) // If below
-			drawableComponents.add(new PhineasLine(centerX, getY() + getHeight(), centerX, centerY, Color.BLUE));
+		{
+			drawableComponents.add(new PhineasLine(centerX,
+					getY() + getHeight(), centerX, centerY, Color.BLUE));
+		}
 	}
 
 	@Override

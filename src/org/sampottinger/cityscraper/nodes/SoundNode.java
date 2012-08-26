@@ -7,10 +7,11 @@ import org.phineas.core.PhineasDrawable;
 import org.sampottinger.cityscraper.workspace.WorkspaceElement;
 
 /**
- * Decorator around a boundable drawable that adds sound capabilities to it
+ * Decorator around a Node that adds sound capabilities to it.
  * @author Sam Pottinger
  */
-public class SoundNode<T extends PhineasBoundable & PhineasDrawable> implements CityScraperNode
+public class SoundNode<T extends PhineasBoundable & PhineasDrawable>
+		implements CityScraperNode
 {
 
 	private SimpleNodeRecordHelper recordHelper = new SimpleNodeRecordHelper();
@@ -19,8 +20,8 @@ public class SoundNode<T extends PhineasBoundable & PhineasDrawable> implements 
 	private T innards;
 	
 	/**
-	 * Creates a sound node out of the given boundable drawable
-	 * @param newInner The boundable drawable to wrap
+	 * Creates a sound node out of the given boundable drawable.
+	 * @param newInner The boundable drawable to wrap.
 	 */
 	public SoundNode(T newInner)
 	{

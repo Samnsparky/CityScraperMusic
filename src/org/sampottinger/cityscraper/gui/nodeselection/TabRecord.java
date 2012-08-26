@@ -4,7 +4,7 @@ import org.phineas.core.PhineasCompoundGameObject;
 
 /**
  * Pairing of a toggle button used to select a tab and that
- * tab's contents
+ * tab's contents.
  * @author Sam Pottinger
  */
 public class TabRecord
@@ -13,19 +13,20 @@ public class TabRecord
 	private final PhineasCompoundGameObject tabContents;
 	
 	/**
-	 * Creates a new pairing between the given button and contents
-	 * @param newTabSelectButton The button for this tab
-	 * @param newTabContents The contents of this tab
+	 * Creates a new pairing between the given button and contents.
+	 * @param newTabSelectButton The button for this tab.
+	 * @param newTabContents The contents of this tab.
 	 */
-	public TabRecord(TabSelectionButton newTabSelectButton, PhineasCompoundGameObject newTabContents)
+	public TabRecord(TabSelectionButton newTabSelectButton,
+			PhineasCompoundGameObject newTabContents)
 	{
 		tabSelectButton = newTabSelectButton;
 		tabContents = newTabContents;
 	}
 	
 	/**
-	 * Get the button that selects this tab
-	 * @return The toggle button that activates this tab
+	 * Get the button that selects this tab.
+	 * @return The toggle button that activates this tab.
 	 */
 	public TabSelectionButton getButton()
 	{
@@ -33,8 +34,8 @@ public class TabRecord
 	}
 	
 	/**
-	 * Get the contents of this tab
-	 * @return The compound object that this tab contains
+	 * Get the contents of this tab.
+	 * @return The compound object that this tab contains.
 	 */
 	public PhineasCompoundGameObject getContents()
 	{

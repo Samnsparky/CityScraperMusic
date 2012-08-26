@@ -1,7 +1,7 @@
 package org.sampottinger.cityscraper.connection;
 
 /**
- * Exception indicating a distance was requested for a space infinitely far away.
+ * Exception for when a distance was requested for a space infinitely far away.
  * @author Sam Pottinger
  */
 public class InfiniteDistanceException extends Exception {

@@ -8,6 +8,7 @@ public class LessGateNode extends SimpleGraphicalNode
 {	
 	public LessGateNode(int x, int y) throws IOException
 	{
-		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.LESS_GATE));
+		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(
+				SpecialNodeType.LESS_GATE));
 	}
 }

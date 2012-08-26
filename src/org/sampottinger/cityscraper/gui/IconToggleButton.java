@@ -21,8 +21,8 @@ import org.phineas.core.PhineasPlaceable;
  * Toggle button that wraps a small icon with text and an activated box
  * @author Sam Pottinger
 **/
-public class IconToggleButton implements PhineasHoverListener, PhineasClickListener, ToggleButton,
-PhineasCompoundGameObject, PhineasPlaceable
+public class IconToggleButton implements PhineasHoverListener,
+PhineasClickListener, ToggleButton, PhineasCompoundGameObject, PhineasPlaceable
 {
 	private static final Color INACTIVE_COLOR = Color.BLACK;
 	private static final Color ACTIVE_COLOR = new Color(134, 130, 130);
@@ -34,7 +34,10 @@ PhineasCompoundGameObject, PhineasPlaceable
 	private static final int ICON_HORIZ_OFFSET = 32;
 	private static final int ICON_VERT_OFFSET = 16;
 	private static final int CHARACTER_WIDTH = 7;
-	private static final Font CAPTION_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+	private static final Font CAPTION_FONT = new Font(
+			Font.MONOSPACED,
+			Font.PLAIN,
+			12);
 	
 	private boolean active;
 	private int x;
@@ -46,19 +49,24 @@ PhineasCompoundGameObject, PhineasPlaceable
 	private Collection<ToggleButtonListener> listeners;
 	
 	/**
-	 * Create a new toggle button
-	 * @param newX The x position of the toggle button
-	 * @param newY The y position of the toggle button
-	 * @param newDepth The level at which this button should be drawn (affects drawing order)
-	 * @param newText The text the toggle button should display
-	 * @param iconLoc The location of the icon that should appear on this button
-	 * @param newBackgroundDepth The depth that the background of the button should be drawn at
-	 * @param newForegroundDepth The depth that the foreground of the button should be drawn at
-	 * @throws IOException Thrown if the icon could not be found
-	 * @throws PhineasException Thrown if the icon was found but was corrupted
+	 * Create a new toggle button.
+	 * @param newX The x position of the toggle button.
+	 * @param newY The y position of the toggle button.
+	 * @param newDepth The level at which this button should be drawn
+	 * 		(affects drawing order).
+	 * @param newText The text the toggle button should display.
+	 * @param iconLoc The location of the icon that should appear on this
+	 * 		button.
+	 * @param newBackgroundDepth The depth that the background of the button
+	 * 		should be drawn at.
+	 * @param newForegroundDepth The depth that the foreground of the button
+	 * 		should be drawn at.
+	 * @throws IOException Thrown if the icon could not be found.
+	 * @throws PhineasException Thrown if the icon was found but was corrupted.
 	 */
 	public IconToggleButton(int newX, int newY, String newText, String iconLoc, 
-			int newBackgroundDepth, int newForegroundDepth) throws IOException, PhineasException
+			int newBackgroundDepth, int newForegroundDepth) throws IOException,
+			PhineasException
 	{
 		
 		// Save simple attributes
@@ -67,12 +75,17 @@ PhineasCompoundGameObject, PhineasPlaceable
 		y = newY;
 		
 		// Create simple components
-		targetIcon = new PhineasSprite(x + ICON_HORIZ_OFFSET, y + ICON_VERT_OFFSET, iconLoc, newForegroundDepth);
-		targetRectangle = new PhineasRectangle(x, y, WIDTH, HEIGHT, INACTIVE_COLOR, newBackgroundDepth);
+		targetIcon = new PhineasSprite(
+				x + ICON_HORIZ_OFFSET, y + ICON_VERT_OFFSET,
+				iconLoc,
+				newForegroundDepth);
+		targetRectangle = new PhineasRectangle(x, y, WIDTH, HEIGHT,
+				INACTIVE_COLOR, newBackgroundDepth);
 		
 		// Create text
 		horizontalTextOffset = calculateTextHorizontalOffset(newText);
-		targetText = new PhineasText(x + horizontalTextOffset, y + TEXT_VERT_OFFSET, newText, TEXT_COLOR, newForegroundDepth);
+		targetText = new PhineasText(x + horizontalTextOffset,
+				y + TEXT_VERT_OFFSET, newText, TEXT_COLOR, newForegroundDepth);
 		targetText.setFont(CAPTION_FONT);
 		
 		// Create collection for listeners

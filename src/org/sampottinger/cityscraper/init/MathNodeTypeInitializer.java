@@ -19,7 +19,7 @@ import org.sampottinger.cityscraper.nodes.SpecialNodePrototype.SpecialNodeType;
  */
 public class MathNodeTypeInitializer implements NodeTypeInitializer
 {
-	private static MathNodeTypeInitializer instance = null;
+	private static MathNodeTypeInitializer instance;
 	
 	private MathNodeTypeInitializer() {}
 	

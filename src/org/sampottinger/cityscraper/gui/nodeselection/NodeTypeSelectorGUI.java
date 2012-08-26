@@ -11,7 +11,7 @@ import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType
 import org.sampottinger.cityscraper.nodes.CityScraperNodePrototype;
 
 /**
- * Listener to gui components related to the selection of node types
+ * Listener to GUI components related to the selection of node types.
  * @author Sam Pottinger
  */
 public class NodeTypeSelectorGUI implements PhineasCompoundGameObject
@@ -21,13 +21,14 @@ public class NodeTypeSelectorGUI implements PhineasCompoundGameObject
 	private NodeTypeSelectorStateManager stateManager;
 	
 	/**
-	 * Create a new node selector with the given tabs
-	 * @param newTabs The tabs that this node selector should use
-	 * @param newJanitor The janitor to use to interface with the game
-	 * @param newStateManager The manager that handles state of actual node selection toggle
-	 *                     buttons
+	 * Create a new node selector with the given tabs.
+	 * @param newTabs The tabs that this node selector should use.
+	 * @param newJanitor The janitor to use to interface with the game.
+	 * @param newStateManager The manager that handles state of actual node
+	 * 		selection toggle buttons.
 	 */
-	public NodeTypeSelectorGUI(NodeTypeSelectorJanitor newJanitor, NodeTypeSelectorStateManager newStateManager)
+	public NodeTypeSelectorGUI(NodeTypeSelectorJanitor newJanitor,
+			NodeTypeSelectorStateManager newStateManager)
 	{
 		tabs = new ArrayList<TabRecord>();
 		janitor = newJanitor;

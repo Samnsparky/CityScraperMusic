@@ -8,6 +8,7 @@ public class EqualGateNode extends SimpleGraphicalNode
 {	
 	public EqualGateNode(int x, int y) throws IOException
 	{
-		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.EQUAL_GATE));
+		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(
+				SpecialNodeType.EQUAL_GATE));
 	}
 }

@@ -22,12 +22,12 @@ public class Cityscraper {
 	private static final int NODE_SELECTOR_X = 645;
 	private static final int NODE_SELECTOR_Y = 0;
 	private static final int WORKSPACE_WIDTH = 610;
-	private static final int WORKSPACE_HEIGHT = HEIGHT;
+	private static final int WORKSPACE_HEIGHT = 608;
 	private static final int X_DISCRETE_STEP = 16;
 	private static final int Y_DISCRETE_STEP = 16;
 	
 	private static final int BUTTON_FG_DEPTH = PhineasDrawable.DEFAULT_DEPTH;
-	private static final int BUTTON_BG_DEPTH = PhineasDrawable.DEFAULT_DEPTH + 1;
+	private static final int BUTTON_BG_DEPTH = BUTTON_FG_DEPTH + 1;
 	
 	@SuppressWarnings("rawtypes")
 	public static void main(String [] args)
@@ -48,32 +48,66 @@ public class Cityscraper {
 		try 
 		{	
 			// Create node type selector
-			nodeSelectorBuilder = new NodeTypeBuilder(NODE_SELECTOR_X, NODE_SELECTOR_Y, HEIGHT, 
-					BUTTON_BG_DEPTH, BUTTON_FG_DEPTH, game);
+			nodeSelectorBuilder = new NodeTypeBuilder(
+					NODE_SELECTOR_X,
+					NODE_SELECTOR_Y,
+					HEIGHT, 
+					BUTTON_BG_DEPTH,
+					BUTTON_FG_DEPTH,
+					game
+			);
 			nodeTypeSelector = nodeSelectorBuilder.createSelector();
 			nodeTypeSelector.showTab(TabType.FLOW);
 			game.addEntity(nodeTypeSelector);
 			
 			// Create occupancy grid
-			workspaceGrid = new WorkspaceGrid(0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, X_DISCRETE_STEP, Y_DISCRETE_STEP);
+			workspaceGrid = new WorkspaceGrid(
+					0,
+					0,
+					WORKSPACE_WIDTH,
+					WORKSPACE_HEIGHT,
+					X_DISCRETE_STEP,
+					Y_DISCRETE_STEP
+			);
 			
 			// Create workspace manager
-			workspaceManager = new WorkspaceManager(workspaceGrid, game, 0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT);
+			workspaceManager = new WorkspaceManager(
+					workspaceGrid,
+					game,
+					0,
+					0,
+					WORKSPACE_WIDTH,
+					WORKSPACE_HEIGHT
+			);
 			
 			// Add workspace region
-			workspaceRegion = new WorkspaceRegion(0, 0, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, nodeTypeSelector, 
-					workspaceManager, X_DISCRETE_STEP, Y_DISCRETE_STEP);
+			workspaceRegion = new WorkspaceRegion(
+					0,
+					0,
+					WORKSPACE_WIDTH,
+					WORKSPACE_HEIGHT,
+					nodeTypeSelector, 
+					workspaceManager,
+					X_DISCRETE_STEP,
+					Y_DISCRETE_STEP
+			);
 			game.addEntity(workspaceRegion);
 			
 			game.startGame();
 		}
 		catch (PhineasException e)
 		{
-			System.out.println("Failed to start game because of Phineas errror: " + e);
+			System.err.format(
+					"Failed to start game because of Phineas errror: %s",
+					e
+			);
 		}
 		catch (IOException e) 
 		{
-			System.out.println("Failed to start game because of IO error: " + e);
+			System.err.format(
+					"Failed to start game because of IO error: %s",
+					e
+			);
 		}
 	}
 

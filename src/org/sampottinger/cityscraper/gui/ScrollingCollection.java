@@ -8,7 +8,8 @@ import org.phineas.core.PhineasPlaceable;
  * @author Sam Pottinger
  * @param <T> The type this collection will be targeting
  */
-public class ScrollingCollection<T extends PhineasPlaceable & PhineasBoundable> implements SliderSource
+public class ScrollingCollection<T extends PhineasPlaceable & PhineasBoundable>
+		implements SliderSource
 {
 	
 	private final ScrollingCollectionBoundsStrategy boundsStrategy;
@@ -28,7 +29,8 @@ public class ScrollingCollection<T extends PhineasPlaceable & PhineasBoundable> 
 	public ScrollingCollection(
 			ScrollingCollectionBoundsStrategy targetBoundsStrategy,
 			ScrollingCollectionMovementStrategy targetMovementStrategy,
-			Iterable<T> targetEntities, int startingValue, int newIncrementValue)
+			Iterable<T> targetEntities, int startingValue,
+			int newIncrementValue)
 	{
 		boundsStrategy = targetBoundsStrategy;
 		movementStrategy = targetMovementStrategy;

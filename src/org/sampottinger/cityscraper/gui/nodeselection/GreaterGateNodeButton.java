@@ -16,11 +16,18 @@ public class GreaterGateNodeButton extends IconToggleButton
 
 	private static final String TEXT = "fltr greater";
 
-	public GreaterGateNodeButton(int newX, int newY, int newBackgroundDepth, int newForegroundDepth) throws IOException,
-			PhineasException
+	public GreaterGateNodeButton(int newX, int newY, int newBackgroundDepth,
+			int newForegroundDepth) throws IOException, PhineasException
 	{
-		super(newX, newY, TEXT, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.GREATER_GATE), 
-				newBackgroundDepth, newForegroundDepth);
+		super(
+				newX,
+				newY,
+				TEXT,
+				SpecialNodeImgLocResolver.getInstance().getLoc(
+						SpecialNodeType.GREATER_GATE), 
+				newBackgroundDepth,
+				newForegroundDepth
+		);
 	}
 	
 }

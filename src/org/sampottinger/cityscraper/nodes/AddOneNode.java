@@ -8,6 +8,7 @@ public class AddOneNode extends SimpleGraphicalNode
 {	
 	public AddOneNode(int x, int y) throws IOException
 	{
-		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.ADD_ONE));
+		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(
+				SpecialNodeType.ADD_ONE));
 	}
 }

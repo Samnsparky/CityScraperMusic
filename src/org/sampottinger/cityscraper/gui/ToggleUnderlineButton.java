@@ -11,11 +11,15 @@ import org.phineas.core.PhineasClickListener;
 import org.phineas.core.PhineasHoverListener;
 
 /**
+ * A graphical toggle button for a Phineas-based application or component.
+ * 
  * A button that can be activated and will stay activated until
- * expressly deactivated
+ * expressly deactivated.
+ * 
  * @author Sam Pottinger
  */
-public class ToggleUnderlineButton extends PhineasSprite implements PhineasHoverListener, PhineasClickListener, ToggleButton
+public class ToggleUnderlineButton extends PhineasSprite implements
+		PhineasHoverListener, PhineasClickListener, ToggleButton
 {
 	static int HORIZ_OFFSET = 2;
 	
@@ -25,15 +29,17 @@ public class ToggleUnderlineButton extends PhineasSprite implements PhineasHover
 	private Collection<ToggleButtonListener> listeners;
 	
 	/**
-	 * Creates a new button at the given coordiante with the given image
-	 * @param newX The x (pixel) coordinate of this button
-	 * @param newY The y (pixel) coordinate of this button
-	 * @param newInactiveLoc The location of the image to use when this button is not activated
-	 * @param newActiveLoc The location if the image to use when this button has been clicked on
-	 *                  and is active
-	 * @throws IOException One or more of the images could not be loaded
+	 * Creates a new button at the given coordiante with the given image.
+	 * @param newX The x (pixel) coordinate of this button.
+	 * @param newY The y (pixel) coordinate of this button.
+	 * @param newInactiveLoc The location of the image to use when this
+	 * 		button is not activated.
+	 * @param newActiveLoc The location if the image to use when this
+	 * 		button has been clicked on and is active.
+	 * @throws IOException One or more of the images could not be loaded.
 	 */
-	public ToggleUnderlineButton(int newX, int newY, String newInactiveLoc, String newActiveLoc) throws IOException
+	public ToggleUnderlineButton(int newX, int newY, String newInactiveLoc,
+			String newActiveLoc) throws IOException
 	{
 		super(newX, newY, newInactiveLoc);
 		activeLoc = newActiveLoc;
@@ -47,11 +53,14 @@ public class ToggleUnderlineButton extends PhineasSprite implements PhineasHover
 	{
 		if(!activated)
 		{
-			try 
+			try
 			{
 				setImage(activeLoc);
-			} catch (IOException e) 
-			{}
+			}
+			catch (IOException e) 
+			{
+				throw new RuntimeException("Unexpected program state");
+			}
 		}
 	}
 
@@ -60,11 +69,14 @@ public class ToggleUnderlineButton extends PhineasSprite implements PhineasHover
 	{
 		if(!activated)
 		{
-			try 
+			try
 			{
 				setImage(inactiveLoc);
-			} catch (IOException e) 
-			{}
+			}
+			catch (IOException e)
+			{
+				throw new RuntimeException("Unexpected program state");
+			}
 		}
 	}
 
@@ -121,7 +133,10 @@ public class ToggleUnderlineButton extends PhineasSprite implements PhineasHover
 		{
 			setImage(inactiveLoc);
 		} 
-		catch (IOException e) {}
+		catch (IOException e)
+		{
+			throw new RuntimeException("Unexpected program state");
+		}
 		
 		for(ToggleButtonListener l : listeners)
 			l.onStateChange(this, false);
@@ -149,9 +164,14 @@ public class ToggleUnderlineButton extends PhineasSprite implements PhineasHover
 	public void activate()
 	{
 		activated = true;
-		
-		// TODO: need to clean this up
-		try {setImage(activeLoc);} 
-		catch (IOException e) {e.printStackTrace();}
+
+		try
+		{
+			setImage(activeLoc);
+		} 
+		catch (IOException e)
+		{
+			throw new RuntimeException("Unexpected program state");
+		}
 	}
 }

@@ -2,12 +2,13 @@ package org.sampottinger.cityscraper.workspace;
 
 import java.util.Collection;
 
+import org.phineas.contrib.PhineasLocation;
 import org.phineas.core.PhineasBoundable;
 import org.phineas.core.PhineasGameFacade;
-import org.sampottinger.cityscraper.SimpleCoordinatePair;
 
 /**
- * Facade / decorator for workspace related support objects and the underlying game engine
+ * Facade / decorator for workspace related support objects and the underlying
+ * game engine.
  * @author Sam Pottinger
  */
 public class WorkspaceManager
@@ -21,12 +22,13 @@ public class WorkspaceManager
 	private int maxY;
 	
 	/**
-	 * Create a workspace manager that abstracts the given grid and game
-	 * @param targetGrid The occupancy grid to operate on
-	 * @param targetGame The game that will manage workspace elements
+	 * Create a workspace manager that abstracts the given grid and game.
+	 * @param targetGrid The occupancy grid to operate on.
+	 * @param targetGame The game that will manage workspace elements.
 	 */
-	public WorkspaceManager(WorkspaceGrid targetGrid, PhineasGameFacade targetGame,
-			int newStartX, int newStartY, int newWidth, int newHeight)
+	public WorkspaceManager(WorkspaceGrid targetGrid,
+			PhineasGameFacade targetGame, int newStartX, int newStartY,
+			int newWidth, int newHeight)
 	{
 		grid = targetGrid;
 		game = targetGame;
@@ -38,8 +40,8 @@ public class WorkspaceManager
 	}
 	
 	/**
-	 * Registers the given element with the game and occupancy grid
-	 * @param newElement The new element to add to the game
+	 * Registers the given element with the game and occupancy grid.
+	 * @param newElement The new element to add to the game.
 	 */
 	public void createElement(WorkspaceElement newElement)
 	{
@@ -48,11 +50,11 @@ public class WorkspaceManager
 	}
 	
 	/**
-	 * Determines if the given position has something in it
+	 * Determines if the given position has something in it.
 	 * Values outside the range of the workspace are reported occupied.
-	 * @param x The horizontal coordinate to check
-	 * @param y The vertical coordinate to check
-	 * @return true if occupied and false otherwise
+	 * @param x The horizontal coordinate to check.
+	 * @param y The vertical coordinate to check.
+	 * @return true if occupied and false otherwise.
 	 */
 	public boolean isFree(int x, int y)
 	{
@@ -63,10 +65,10 @@ public class WorkspaceManager
 	}
 	
 	/**
-	 * Determine if the element's area is completely free
-	 * @param element The element to test
-	 * @return true if any of the area covered by the given element is occupied and
-	 *         false if its bounding box is completely open
+	 * Determine if the element's area is completely free.
+	 * @param element The element to test.
+	 * @return true if any of the area covered by the given element is occupied
+	 * 		and false if its bounding box is completely open.
 	 */
 	public boolean isOccupied(PhineasBoundable boundable)
 	{
@@ -74,10 +76,10 @@ public class WorkspaceManager
 	}
 	
 	/**
-	 * Get the element at the given position
-	 * @param x The x position of the space whose occupant is desired
-	 * @param y The y position of the space whose occupant is desired
-	 * @return The element at the given position or null if none there
+	 * Get the element at the given position.
+	 * @param x The x position of the space whose occupant is desired.
+	 * @param y The y position of the space whose occupant is desired.
+	 * @return The element at the given position or null if none there.
 	 */
 	public WorkspaceElement getElementAt(int x, int y)
 	{
@@ -156,7 +158,16 @@ public class WorkspaceManager
 		};
 	}
 
-	public Collection<SimpleCoordinatePair> getSpacesOccupiedBy(
+	/**
+	 * Get a collection of locations that the given object occupies.
+	 * 
+	 * Get the locations of the spaces that the given boundable object would
+	 * occupy / does occupy in this workspace.
+	 * 
+	 * @param target The object to find the spaces for.
+	 * @return Collection of locations of spaces occupied by this target.
+	 */
+	public Collection<PhineasLocation> getSpacesOccupiedBy(
 			PhineasBoundable target) {
 		return grid.getSpacesOccupiedBy(target);
 	}

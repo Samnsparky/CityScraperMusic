@@ -3,30 +3,33 @@ package org.sampottinger.cityscraper.init;
 import org.phineas.core.PhineasBoundable;
 import org.phineas.core.PhineasDrawable;
 import org.phineas.core.PhineasPlaceable;
+import org.sampottinger.cityscraper.BoundableInfoSelector.Axis;
 import org.sampottinger.cityscraper.gui.DecoratedSlidingCollection;
 import org.sampottinger.cityscraper.gui.ScrollResponsiveRegion;
 import org.sampottinger.cityscraper.gui.ScrollingCollection;
 import org.sampottinger.cityscraper.gui.ScrollingCollectionBoundsStrategy.ScrollingCollectionBoundsStrategyID;
 import org.sampottinger.cityscraper.gui.ScrollingCollectionMovementStrategy.ScrollingCollectionMovementStrategyID;
 import org.sampottinger.cityscraper.gui.SlenderSlider;
-import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
 import org.sampottinger.cityscraper.gui.SliderSourceValueScrubber;
 
 /**
- * Builder pattern for creating NodeContent instances
+ * Builder for creating NodeContent instances.
  * @author Sam Pottinger
  */
-public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & PhineasBoundable>
+public class DecoratedSlidingCollectionBuilder
+		<T extends PhineasPlaceable & PhineasBoundable>
 {
-	private static final ScrollingCollectionBoundsStrategyID DEFAULT_BOUNDS_STRATEGY_ID = 
+	private static final ScrollingCollectionBoundsStrategyID
+			DEFAULT_BOUNDS_STRATEGY_ID = 
 			ScrollingCollectionBoundsStrategyID.TIGHT; 
-	private static final ScrollingCollectionMovementStrategyID DEFAULT_MOVEMENT_STRATEGY_ID =
+	private static final ScrollingCollectionMovementStrategyID
+			DEFAULT_MOVEMENT_STRATEGY_ID =
 			ScrollingCollectionMovementStrategyID.DIRECT;
 	private static final int DEFAULT_SCROLL_PADDING = 4;
 	
 	private ScrollingCollectionBoundsStrategyID boundsStrategyID;
 	private ScrollingCollectionMovementStrategyID movementStrategyID;
-	private SliderDirection slidingDirection;
+	private Axis slidingDirection;
 	private Iterable<T> targetEntities;
 	private int x;
 	private int y;
@@ -39,19 +42,22 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 	private int scrollRegionHeight;
 	
 	/**
-	 * Creates a new node content buider
-	 * @param newX The x position of the upper left hand corner of the content region
-	 * @param newY The y position of the upper left hand corner of the content region
-	 * @param newScrollbarOffset The offset of the scrollbar for the content
-	 * @param newDirection The direction in which the slider will travels
-	 * @param newTravel The number of pixels the scrollbar can travel
-	 * @param newAmountActive The number of pixels that are visible at any given point in time
-	 *                        in the scrollable region
+	 * Creates a new node content builder.
+	 * @param newX The x position of the upper left hand corner of the content
+	 * 		region.
+	 * @param newY The y position of the upper left hand corner of the content
+	 * 		region.
+	 * @param newScrollbarOffset The offset of the scrollbar for the content.
+	 * @param newDirection The direction in which the slider will travels.
+	 * @param newTravel The number of pixels the scrollbar can travel.
+	 * @param newAmountActive The number of pixels that are visible at any given
+	 * 		point in time in the scrollable region.
 	 * @param newTargetEntities The entities that will be scrolled through
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public DecoratedSlidingCollectionBuilder(int newX, int newY, int newScrollbarOffset, SliderDirection newDirection,
-			int newTravel, int newAmountActive, Iterable newTargetEntities)
+	public DecoratedSlidingCollectionBuilder(int newX, int newY, 
+			int newScrollbarOffset, Axis newDirection, int newTravel,
+			int newAmountActive, Iterable newTargetEntities)
 	{
 		// Properties provided
 		x = newX;
@@ -69,7 +75,7 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		depth = PhineasDrawable.DEFAULT_DEPTH;
 		
 		// Orientation specific properties
-		if(slidingDirection == SliderDirection.HORIZONTAL)
+		if(slidingDirection == Axis.X_AXIS)
 		{
 			scrollRegionHeight = scrollbarOffset + scrollRegionPadding;
 			scrollRegionWidth = amountActive;
@@ -81,7 +87,8 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		}
 	};
 	
-	public void setBoundsStrategyID(ScrollingCollectionBoundsStrategyID newBoundsStrategy)
+	public void setBoundsStrategyID(
+			ScrollingCollectionBoundsStrategyID newBoundsStrategy)
 	{
 		
 	}
@@ -105,7 +112,7 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		int sliderY;
 		
 		// Calculate direction specific properties
-		if(slidingDirection == SliderDirection.HORIZONTAL)
+		if(slidingDirection == Axis.X_AXIS)
 		{
 			sliderX = x;
 			sliderY = y + scrollbarOffset;
@@ -117,8 +124,15 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		}
 		
 		// Create collection
-		newScrollingCollection = ScrollingCollectionFactory.getInstance().createCollection(
-				boundsStrategyID, movementStrategyID, targetEntities, slidingDirection, amountActive);
+		ScrollingCollectionFactory collectionFactory =
+				ScrollingCollectionFactory.getInstance();
+		newScrollingCollection = collectionFactory.createCollection(
+						boundsStrategyID,
+						movementStrategyID,
+						targetEntities,
+						slidingDirection,
+						amountActive
+				);
 		scrubbedSource = new SliderSourceValueScrubber(newScrollingCollection);
 		
 		// Determine if a scrollbar is needed
@@ -126,8 +140,13 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		if(scrubbedSource.getMaxValue() > 0)
 		{
 			// Create scrollbar
-			scrollBarBuilder = new FittedSlenderSliderBuilder(scrubbedSource, sliderX, sliderY, 
-					travel, amountActive);
+			scrollBarBuilder = new FittedSlenderSliderBuilder(
+					scrubbedSource,
+					sliderX,
+					sliderY, 
+					travel,
+					amountActive
+			);
 			scrollBarBuilder.setDepth(depth);
 			newScrollbar = scrollBarBuilder.createSlider();
 		}
@@ -137,19 +156,31 @@ public class DecoratedSlidingCollectionBuilder<T extends PhineasPlaceable & Phin
 		}
 		
 		// Create scrolling region
-		newScrollingRegion = new ScrollResponsiveRegion(scrubbedSource, x, y, scrollRegionWidth, 
-				scrollRegionHeight);
+		newScrollingRegion = new ScrollResponsiveRegion(
+				scrubbedSource,
+				x,
+				y,
+				scrollRegionWidth, 
+				scrollRegionHeight
+		);
 		
 		// Create sliding collection
 		if(newScrollbar == null)
 		{
-			return new DecoratedSlidingCollection(newScrollingCollection, newScrollingRegion, 
-					(Iterable<Object>) targetEntities);
+			return new DecoratedSlidingCollection(
+					newScrollingCollection,
+					newScrollingRegion, 
+					(Iterable<Object>) targetEntities
+			);
 		}
 		else
 		{
-			return new DecoratedSlidingCollection(newScrollingCollection, newScrollingRegion, newScrollbar, 
-					(Iterable<Object>) targetEntities);
+			return new DecoratedSlidingCollection(
+					newScrollingCollection,
+					newScrollingRegion,
+					newScrollbar, 
+					(Iterable<Object>) targetEntities
+			);
 		}
 	}
 }

@@ -13,18 +13,18 @@ import org.sampottinger.cityscraper.nodes.SoundNodePrototype;
 
 /**
  * Facade to work with sound node configuration file to load sound
- * node prototypes and selection buttons
+ * node prototypes and selection buttons.
  * @author Sam Pottinger
  */
 public class SoundNodeTypeInitializer implements NodeTypeInitializer
 {
-	private static SoundNodeTypeInitializer instance = null;
+	private static SoundNodeTypeInitializer instance;
 	
 	private Iterable<SoundInfoRecord> infoRecords;
 
 	/**
-	 * Gets a shared instance of this configuration facade
-	 * @return Shared instance of this singleton
+	 * Gets a shared instance of this configuration facade.
+	 * @return Shared instance of this singleton.
 	 */
 	public static SoundNodeTypeInitializer getInstance()
 	{
@@ -39,9 +39,10 @@ public class SoundNodeTypeInitializer implements NodeTypeInitializer
 	}
 	
 	/**
-	 * Loads and caches info about available sounds or returns cache if available
-	 * @return Iterable over loaded sound info records
-	 * @throws IOException 
+	 * Loads and caches info about available sounds or returns cache if
+	 * available.
+	 * @return Iterable over loaded sound info records.
+	 * @throws IOException Thrown if can not find file for available sounds.
 	 */
 	private Iterable<SoundInfoRecord> getRecords() throws IOException
 	{
@@ -66,11 +67,15 @@ public class SoundNodeTypeInitializer implements NodeTypeInitializer
 		y = startY;
 		for(SoundInfoRecord target : getRecords())
 		{
-			newButton = new IconToggleButton(x, y, target.getDisplayName(), target.getImageLoc(), bgDepth, fgDepth);
+			newButton = new IconToggleButton(x, y, target.getDisplayName(),
+					target.getImageLoc(), bgDepth, fgDepth);
 			newList.add(newButton);
 			y += newButton.getHeight() + verticalPadding;
-			selectorManager.registerButton(new SoundNodePrototype<PhineasSprite>(
-					target.getImageLoc(), target.getSoundLoc()), newButton);
+			selectorManager.registerButton(
+					new SoundNodePrototype<PhineasSprite>(target.getImageLoc(),
+							target.getSoundLoc()),
+					newButton
+			);
 		}
 		
 		return newList;

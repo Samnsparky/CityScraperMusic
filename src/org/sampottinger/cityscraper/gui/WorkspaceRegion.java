@@ -3,6 +3,7 @@ package org.sampottinger.cityscraper.gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.phineas.contrib.PhineasLine;
 import org.phineas.core.PhineasBoundable;
@@ -13,6 +14,7 @@ import org.phineas.core.PhineasHoverListener;
 import org.phineas.core.PhineasLocateable;
 import org.phineas.core.PhineasPlaceable;
 import org.sampottinger.cityscraper.connection.NodePathFinder;
+import org.sampottinger.cityscraper.connection.NodePathFinderResult;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.nodes.CityScraperNode;
 import org.sampottinger.cityscraper.nodes.CityScraperNodePrototype;
@@ -21,12 +23,13 @@ import org.sampottinger.cityscraper.workspace.WorkspaceElement;
 import org.sampottinger.cityscraper.workspace.WorkspaceManager;
 
 /**
- * Hoverable region where new nodes can be placed
+ * Hoverable region where new nodes can be placed.
  * @author Sam Pottinger
  */
-public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & PhineasDrawable> 
-	implements PhineasHoverListener, PhineasGlobalMouseMovementListener, PhineasDrawable,
-	PhineasClickListener
+public class WorkspaceRegion
+	<T extends PhineasPlaceable & PhineasBoundable & PhineasDrawable> 
+	implements PhineasHoverListener, PhineasGlobalMouseMovementListener,
+	PhineasDrawable, PhineasClickListener
 {
 	
 	private int x;
@@ -51,12 +54,17 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	 * @param newY The y position of this region's top left corner
 	 * @param newWidth The horizontal size of this region in pixels
 	 * @param newHeight The vertical size of this region in pixels
-	 * @param newNodeTypeSelector The node type selector that dictates what node type will be placed here
-	 * @param newWorkspaceManager Data structure containing the simulation grid for the workspace
-	 * @param newXStep The horizontal size of the discrete spaces in the workspace (in pixels)
-	 * @param newYStep The vertical size of the discrete spaces in the workspace (in pixels)
+	 * @param newNodeTypeSelector The node type selector that dictates what
+	 * 		node type will be placed here
+	 * @param newWorkspaceManager Data structure containing the simulation
+	 * 		grid for the workspace
+	 * @param newXStep The horizontal size of the discrete spaces in the
+	 * 		workspace (in pixels)
+	 * @param newYStep The vertical size of the discrete spaces in the
+	 * 		workspace (in pixels)
 	 */
-	public WorkspaceRegion(int newX, int newY, int newWidth, int newHeight, NodeTypeSelectorGUI newNodeTypeSelector,
+	public WorkspaceRegion(int newX, int newY, int newWidth, int newHeight, 
+			NodeTypeSelectorGUI newNodeTypeSelector,
 			WorkspaceManager newWorkspaceManager, int newXStep, int newYStep)
 	{
 		x = newX;
@@ -75,20 +83,25 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	}
 	
 	/**
-	 * Creates a new region in which new nodes can be placed by clicking
-	 * @param newX The x position of this region's top left corner
-	 * @param newY The y position of this region's top left corner
-	 * @param newWidth The horizontal size of this region in pixels
-	 * @param newHeight The vertical size of this region in pixels
-	 * @param newNodeTypeSelector The node type selector that dictates what node type will be placed here
-	 * @param newWorkspaceManager Data structure containing the simulation grid for the workspace
-	 * @param newXStep The horizontal size of the discrete spaces in the workspace (in pixels)
-	 * @param newYStep The vertical size of the discrete spaces in the workspace (in pixels)
-	 * @param newDepth The depth at which previews will be shown
+	 * Creates a new region in which new nodes can be placed by clicking.
+	 * @param newX The x position of this region's top left corner.
+	 * @param newY The y position of this region's top left corner.
+	 * @param newWidth The horizontal size of this region in pixels.
+	 * @param newHeight The vertical size of this region in pixels.
+	 * @param newNodeTypeSelector The node type selector that dictates what
+	 * 		node type will be placed here.
+	 * @param newWorkspaceManager Data structure containing the simulation
+	 * 		grid for the workspace.
+	 * @param newXStep The horizontal size of the discrete spaces in the
+	 * 		workspace (in pixels).
+	 * @param newYStep The vertical size of the discrete spaces in the
+	 * 		workspace (in pixels).
+	 * @param newDepth The depth at which previews will be shown.
 	 */
 	public WorkspaceRegion(int newX, int newY, int newWidth, int newHeight, 
-			NodeTypeSelectorGUI newNodeTypeSelector, WorkspaceManager newWorkspaceManager, 
-			int newXStep, int newYStep, int newDepth)
+			NodeTypeSelectorGUI newNodeTypeSelector,
+			WorkspaceManager newWorkspaceManager, int newXStep, int newYStep,
+			int newDepth)
 	{
 		x = newX;
 		y = newY;
@@ -104,15 +117,16 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	}
 	
 	/**
-	 * Make the provided continuous position fit on a discrete step on this region
-	 * @param position The continuous position to make discrete
-	 * @param discreteStep The level of granularity (number of pixels in a "step"
-	 *                     in the target number system)
-	 * @param minRegion The min value that the given continuous position can be while
-	 *                  still being in this region (if the given position val is on the
-	 *                  x axis, this should be the x position of the left side of this
-	 *                  region)
-	 * @return Continuous position provided projected into the discrete number system
+	 * Make the provided continuous value fit on a discrete step on this region.
+	 * @param position The continuous position to make discrete.
+	 * @param discreteStep The level of granularity (number of pixels in a
+	 * 		"step" in the target number system).
+	 * @param minRegion The min value that the given continuous position can be
+	 * 		while still being in this region (if the given position val is on
+	 * 		the x axis, this should be the x position of the left side of this
+	 *      region).
+	 * @return Continuous position provided projected into the discrete number
+	 * 		system.
 	 */
 	private int putOnDiscreteStep(int position, int discreteStep, int minRegion)
 	{
@@ -125,10 +139,12 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	 */
 	private CityScraperNode createPreviewElement()
 	{
-		CityScraperNodePrototype currentPrototype = nodeTypeSelector.getSelectedPrototype();
+		CityScraperNodePrototype currentPrototype =
+				nodeTypeSelector.getSelectedPrototype();
 		CityScraperNode newNode;
 		try { newNode = currentPrototype.createNode(previewX, previewY); } 
-		catch (IOException e) { throw new RuntimeException("Failed to load node image."); }
+		catch (IOException e) { 
+			throw new RuntimeException("Failed to load node image."); }
 		workspaceManager.createElement(newNode);
 		return newNode;
 	}
@@ -244,7 +260,7 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 	public void onLeftRelease(int relativeX, int relativeY)
 	{
 		WorkspaceElement endElement;
-		Iterable<PhineasLocateable> path;
+		NodePathFinderResult path;
 
 		if(drawingLine)
 		{
@@ -257,9 +273,14 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 			else // Otherwise, create new element at position and connect
 				endElement = workspaceManager.getElementAt(previewX, previewY);
 			
-			path = NodePathFinder.getInstance().findPath(startingElement, endElement, workspaceManager);
+			// Find path
+			path = NodePathFinder.getInstance().findPath(
+					startingElement,
+					endElement,
+					workspaceManager);
 			
-			if(path != null)
+			// Register path
+			if(path.wasSuccessful())
 			{
 				createPath(
 						startingElement,
@@ -277,15 +298,31 @@ public class WorkspaceRegion<T extends PhineasPlaceable & PhineasBoundable & Phi
 		}
 	}
 
-	private void createPath(WorkspaceElement start, WorkspaceElement end, Iterable<PhineasLocateable> pathLocations,
-			int stepWidth, int stepHeight)
+	private void createPath(WorkspaceElement start, WorkspaceElement end,
+			NodePathFinderResult path, int stepWidth, int stepHeight)
 	{
 		ConnectorNode newConnection;
+		PhineasLocateable curPos;
+
+		// Leave off final location since it is the end WorkspaceElement
+		int pathLength = path.getLength() - 1;
+
+		// Get vars for iteration and connection setting
 		WorkspaceElement lastElement = start;
+		Iterator<PhineasLocateable> locItr = path.getPath().iterator();
 		
-		for(PhineasLocateable curPos : pathLocations)
+		// Create connections
+		for(int i=0; i<pathLength; i++)
 		{
-			newConnection = new ConnectorNode(curPos.getX(), curPos.getY(), stepWidth, stepHeight);
+			curPos = locItr.next();
+
+			newConnection = new ConnectorNode(
+					curPos.getX(),
+					curPos.getY(),
+					stepWidth,
+					stepHeight
+			);
+
 			workspaceManager.createElement(newConnection);
 			newConnection.addPrevious(lastElement);
 			lastElement.addNext(newConnection);

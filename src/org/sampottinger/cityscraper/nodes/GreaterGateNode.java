@@ -8,6 +8,7 @@ public class GreaterGateNode extends SimpleGraphicalNode
 {	
 	public GreaterGateNode(int x, int y) throws IOException
 	{
-		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.GREATER_GATE));
+		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(
+				SpecialNodeType.GREATER_GATE));
 	}
 }

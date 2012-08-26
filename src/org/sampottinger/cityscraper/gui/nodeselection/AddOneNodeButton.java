@@ -16,11 +16,18 @@ public class AddOneNodeButton extends IconToggleButton
 
 	private static final String TEXT = "add one";
 
-	public AddOneNodeButton(int newX, int newY, int newBackgroundDepth, int newForegroundDepth) throws IOException,
-			PhineasException
+	public AddOneNodeButton(int newX, int newY, int newBackgroundDepth,
+			int newForegroundDepth) throws IOException, PhineasException
 	{
-		super(newX, newY, TEXT, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.ADD_ONE), 
-				newBackgroundDepth, newForegroundDepth);
+		super(
+				newX,
+				newY,
+				TEXT,
+				SpecialNodeImgLocResolver.getInstance().getLoc(
+						SpecialNodeType.ADD_ONE), 
+				newBackgroundDepth,
+				newForegroundDepth
+		);
 	}
 	
 }

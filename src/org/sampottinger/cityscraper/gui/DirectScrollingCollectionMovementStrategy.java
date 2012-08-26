@@ -2,21 +2,22 @@ package org.sampottinger.cityscraper.gui;
 
 import org.phineas.core.PhineasBoundable;
 import org.phineas.core.PhineasPlaceable;
-import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
+import org.sampottinger.cityscraper.BoundableInfoSelector.Axis;
 
 /**
- * ScrollingCollectionMovementStrategy that has a 1 to 1 value to pixel movement ratio
+ * Scroll strategy that has a 1 to 1 value to pixel movement ratio.
  * @author Sam Pottinger
  */
-public class DirectScrollingCollectionMovementStrategy implements ScrollingCollectionMovementStrategy
+public class DirectScrollingCollectionMovementStrategy
+		implements ScrollingCollectionMovementStrategy
 {
-	private SliderDirection targetSliderDirection;
+	private Axis targetSliderDirection;
 	
 	/**
 	 * Creates a new LinearScrollingCollectionMovementStrategy
-	 * @param slidingDirection The direction in which the elements should slide
+	 * @param slidingDirection The axis in which the elements should slide
 	 */
-	public DirectScrollingCollectionMovementStrategy(SliderDirection slidingDirection)
+	public DirectScrollingCollectionMovementStrategy(Axis slidingDirection)
 	{
 		targetSliderDirection = slidingDirection;
 	}
@@ -26,10 +27,10 @@ public class DirectScrollingCollectionMovementStrategy implements ScrollingColle
 			float deltaValue, T element) {
 		switch(targetSliderDirection)
 		{
-		case HORIZONTAL:
+		case X_AXIS:
 			element.setX((int) (element.getX() - deltaValue));
 			break;
-		case VERTICAL:
+		case Y_AXIS:
 			element.setY((int) (element.getY() - deltaValue));
 			break;
 		}

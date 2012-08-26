@@ -9,12 +9,21 @@ import org.sampottinger.cityscraper.workspace.WorkspaceElement;
  * Base class for simple graphical nodes 
  * @author Sam Pottinger
  */
-public abstract class SimpleGraphicalNode extends PhineasSprite implements CityScraperNode
+public abstract class SimpleGraphicalNode extends PhineasSprite
+		implements CityScraperNode
 {
 	
 	private SimpleNodeRecordHelper recordHelper;
 
-	public SimpleGraphicalNode(int newX, int newY, String newImageLoc) throws IOException 
+	/**
+	 * Creates a new node.
+	 * @param newX The x position of the new node.
+	 * @param newY The y position of the new node.
+	 * @param newImageLoc The location of the image to use for the node.
+	 * @throws IOException Thrown if image can not be loaded.
+	 */
+	public SimpleGraphicalNode(int newX, int newY, String newImageLoc)
+			throws IOException 
 	{
 		super(newX, newY, newImageLoc);
 		recordHelper = new SimpleNodeRecordHelper();

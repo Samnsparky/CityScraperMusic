@@ -6,12 +6,13 @@ import java.util.Map;
 import org.sampottinger.cityscraper.nodes.SpecialNodePrototype.SpecialNodeType;
 
 /**
- * Singleton maintaining a mapping of special nodes to the image locations for those images
+ * Singleton maintaining a mapping of special nodes to the image locations for
+ * those images.
  * @author Sam Pottinger
  */
 public class SpecialNodeImgLocResolver
 {
-	private static SpecialNodeImgLocResolver instance = null;
+	private static SpecialNodeImgLocResolver instance;
 	
 	private Map<SpecialNodeType, String> typeToLocMapping;
 	

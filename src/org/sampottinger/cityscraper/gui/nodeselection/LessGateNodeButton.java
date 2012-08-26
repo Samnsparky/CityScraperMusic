@@ -16,11 +16,18 @@ public class LessGateNodeButton extends IconToggleButton
 
 	private static final String TEXT = "fltr less";
 
-	public LessGateNodeButton(int newX, int newY, int newBackgroundDepth, int newForegroundDepth) throws IOException,
-			PhineasException
+	public LessGateNodeButton(int newX, int newY, int newBackgroundDepth,
+			int newForegroundDepth) throws IOException, PhineasException
 	{
-		super(newX, newY, TEXT, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.LESS_GATE), 
-				newBackgroundDepth, newForegroundDepth);
+		super(
+				newX,
+				newY,
+				TEXT,
+				SpecialNodeImgLocResolver.getInstance().getLoc(
+						SpecialNodeType.LESS_GATE), 
+				newBackgroundDepth,
+				newForegroundDepth
+		);
 	}
 	
 }

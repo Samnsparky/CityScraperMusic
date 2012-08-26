@@ -4,12 +4,22 @@ import java.util.Iterator;
 
 import org.phineas.core.PhineasLocateable;
 
+/**
+ * Iterable that provides locations for a path between nodes.
+ * @author Sam Pottinger
+ */
 public class NodePathIterable implements Iterable<PhineasLocateable> {
 	
 	Iterable<DijkstraConnection<PhineasLocateable>> nativePathIterable;
 	DijkstraSpace<PhineasLocateable> startSpace;
 	
-	public NodePathIterable(Iterable<DijkstraConnection<PhineasLocateable>> nativePath,
+	/**
+	 * Create a new iterable that traverses DijkstraConnections.
+	 * @param nativePath The DijkstraConnection path to iterate over.
+	 * @param newStartSpace The space where the path starts.
+	 */
+	public NodePathIterable(
+			Iterable<DijkstraConnection<PhineasLocateable>> nativePath,
 			DijkstraSpace<PhineasLocateable> newStartSpace)
 	{
 		nativePathIterable = nativePath;
@@ -19,7 +29,8 @@ public class NodePathIterable implements Iterable<PhineasLocateable> {
 	@Override
 	public Iterator<PhineasLocateable> iterator()
 	{
-		final Iterator<DijkstraConnection<PhineasLocateable>> itr = nativePathIterable.iterator();
+		final Iterator<DijkstraConnection<PhineasLocateable>> itr = 
+				nativePathIterable.iterator();
 		return new Iterator<PhineasLocateable>()
 		{
 			private DijkstraSpace<PhineasLocateable> previousSpace = startSpace;

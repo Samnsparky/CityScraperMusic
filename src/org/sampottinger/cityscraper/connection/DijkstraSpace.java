@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Record of a space through which a path can be found 
+ * Record of a space through which a path can be found. 
  * @author Sam Pottinger
  */
 public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
@@ -18,9 +18,12 @@ public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
 	private DijkstraConnection<E> currentBacklink;
 
 	/**
+	 * Creates a new non-ending unvisited space with an infinite distance.
+	 * 
 	 * Creates a new space for the given object. Defaults to this not being a
 	 * possible ending / goal position. Sets to be infinite distance away from
 	 * starting position and unvisited.
+	 * 
 	 * @param newTarget The object this space represents.
 	 */
 	public DijkstraSpace(E newTarget)
@@ -35,8 +38,11 @@ public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
 	}
 	
 	/**
-	 * Creates a new space for the given object. Sets to be infinite distance away from
-	 * starting position and unvisited.
+	 * Creates a new unvisited space with an infinite distance.
+	 * 
+	 * Creates a new space for the given object. Sets to be infinite distance
+	 * away from starting position and unvisited.
+	 * 
 	 * @param newTarget The object this space represents.
 	 * @param newIsEnding Indicates if this is a possible goal position.
 	 */
@@ -109,9 +115,11 @@ public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
 	
 	/**
 	 * Get the total distance of this space from the starting position.
-	 * @return The total distance of the best path currently known from this space
-	 * 		to the starting position.
-	 * @throws InfiniteDistanceException Thrown if distance requested but distance is infinite.
+	 * 
+	 * @return The total distance of the best path currently known from this
+	 * 		space to the starting position.
+	 * @throws InfiniteDistanceException Thrown if distance requested but
+	 * 		distance is infinite.
 	 */
 	public int getTotalDistance() throws InfiniteDistanceException
 	{
@@ -121,8 +129,11 @@ public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
 	}
 	
 	/**
-	 * Indicate if the length of the shortest known path from the starting position to
-	 * this space is infinite.
+	 * Set this space's total distance to infinity.
+	 * 
+	 * Indicate if the length of the shortest known path from the starting
+	 * position to this space is infinite.
+	 * 
 	 * @return true if infinite and false otherwise.
 	 */
 	public boolean isDistanceInfinite()
@@ -131,7 +142,7 @@ public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
 	}
 	
 	/**
-	 * Indicates that this node has been visited and should not be visited again.
+	 * Indicates that this node has been visited and shouldn't be visited again.
 	 */
 	public void setVisited()
 	{
@@ -139,7 +150,7 @@ public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
 	}
 	
 	/**
-	 * Determines if this node has been traversed by the path planning algorithm.
+	 * Determines if this node has been traversed by the path finding algorithm.
 	 * @return true if it has and false otherwise.
 	 */
 	public boolean wasVisited()
@@ -148,7 +159,7 @@ public class DijkstraSpace<E> implements Comparable<DijkstraSpace<E>>
 	}
 	
 	/**
-	 * Get the connection that currently connects this node to the best found path.
+	 * Get the connection that connects this node to the shortest found path.
 	 * @return The connection to the "visited" graph.
 	 */
 	public DijkstraConnection<E> getBacklink()

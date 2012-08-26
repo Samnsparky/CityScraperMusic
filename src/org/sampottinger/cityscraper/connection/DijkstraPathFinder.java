@@ -5,21 +5,27 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * Implementation of Dijkstra's algorithm that finds paths between DijkstraSpaces.
+ * Finds shortest path between between DijkstraSpaces.
  * @author Sam Pottinger
  */
 public class DijkstraPathFinder<T>
 {
 	/**
-	 * Find a path between the given starting space and connected "ending" or "goal" spaces.
+	 * Find a path between the given starting space and closest "goal" spaces.
 	 * @param start The space to start on.
-	 * @return Iterable of connections to take to get to the end space or null if no path found.
+	 * @return Iterable of connections to take to get to the end space or null
+	 * 		if no path found. Includes connection that starts with starting
+	 * 		node and a connection that ends with the ending node.
+	 * @throws SpaceNotFoundException Error encountered when traversing given
+	 * 		space and its connections / larger graph.
 	 */
 	public DijkstraPathFinderResult<T> findPath(DijkstraSpace<T> start)
+			throws SpaceNotFoundException
 	{
 		DijkstraSpace<T> currentSpace;
 		Iterable<DijkstraSpace<T>> updatedNeighbors;
-		PriorityQueue<DijkstraSpace<T>> q = new PriorityQueue<DijkstraSpace<T>>();
+		PriorityQueue<DijkstraSpace<T>> q =
+				new PriorityQueue<DijkstraSpace<T>>();
 		
 		// Add starting position with starting distance of zero
 		start.setTotalDistance(0);
@@ -33,14 +39,11 @@ public class DijkstraPathFinder<T>
 			// Check to see if path found
 			if(currentSpace.isEnding())
 			{
-				// Reconstruct path to starting position
-				try {
-					DijkstraSpace<T> lastSpace = currentSpace.getBacklink().getOther(currentSpace);
-					BacklinkIterable<T> path = new BacklinkIterable<T>(lastSpace);
-					return new DijkstraPathFinderResult<T>(path, path.getLength());
-				} catch (SpaceNotFoundException e) {
-					throw new RuntimeException("Unexpected program state.");
-				}
+				BacklinkIterable<T> path =
+						new BacklinkIterable<T>(currentSpace);
+
+				return new DijkstraPathFinderResult<T>(path,
+						path.getLength());
 			}
 			
 			// Update neighbors
@@ -63,37 +66,40 @@ public class DijkstraPathFinder<T>
 	 * Find the new distances for the spaces this space connects to directly.
 	 * @param start The space whose immediate neighbors need updating.
 	 * @return Iterable over neighboring spaces just updated.
+	 * @throws SpaceNotFoundException Error encountered when traversing space
+	 * 		graph.
 	 */
 	private Iterable<DijkstraSpace<T>> traverse(DijkstraSpace<T> start)
+			throws SpaceNotFoundException
 	{
-		List<DijkstraSpace<T>> updatedNeighbors = new ArrayList<DijkstraSpace<T>>();
+		List<DijkstraSpace<T>> updated = new ArrayList<DijkstraSpace<T>>();
 
 		for(DijkstraConnection<T> connection : start.getConnections())
 		{
-			int newDistance;
+			int newDist;
 			DijkstraSpace<T> other;
 
 			// Get the node across from start in this connection
-			try {
-				other = connection.getOther(start);
-			} catch (SpaceNotFoundException e) {
-				throw new RuntimeException("Unexpected program state.");
-			}
+			other = connection.getOther(start);
 			
-			// Set the new total distance for the opposing node if shorter path found.
+			// Set the new distance for the opposing node if shorter path found.
 			try {
-				newDistance = start.getTotalDistance() + connection.getDistance();
-				if(other.isDistanceInfinite() || newDistance < other.getTotalDistance())
+				newDist = start.getTotalDistance() + connection.getDistance();
+				if(other.isDistanceInfinite()
+						|| newDist < other.getTotalDistance())
 				{
-					other.setTotalDistance(newDistance);
+					other.setTotalDistance(newDist);
 					other.setBacklink(connection);
-					updatedNeighbors.add(other);
+					updated.add(other);
 				}
 			} catch (InfiniteDistanceException e) {
-				throw new RuntimeException("Unexpected program state.");
+				throw new RuntimeException(
+						"Unexpected program state. (%s)",
+						e
+				);
 			}
 		}
 
-		return updatedNeighbors;
+		return updated;
 	}
 }

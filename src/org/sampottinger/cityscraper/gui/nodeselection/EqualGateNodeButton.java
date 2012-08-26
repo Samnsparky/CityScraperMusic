@@ -16,11 +16,18 @@ public class EqualGateNodeButton extends IconToggleButton
 
 	private static final String TEXT = "fltr for equal";
 
-	public EqualGateNodeButton(int newX, int newY, int newBackgroundDepth, int newForegroundDepth) throws IOException,
-			PhineasException
+	public EqualGateNodeButton(int newX, int newY, int newBackgroundDepth,
+			int newForegroundDepth) throws IOException, PhineasException
 	{
-		super(newX, newY, TEXT, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.EQUAL_GATE), 
-				newBackgroundDepth, newForegroundDepth);
+		super(
+				newX,
+				newY,
+				TEXT,
+				SpecialNodeImgLocResolver.getInstance().getLoc(
+						SpecialNodeType.EQUAL_GATE), 
+				newBackgroundDepth,
+				newForegroundDepth
+		);
 	}
 	
 }

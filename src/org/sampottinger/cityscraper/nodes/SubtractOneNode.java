@@ -8,6 +8,7 @@ public class SubtractOneNode extends SimpleGraphicalNode
 {	
 	public SubtractOneNode(int x, int y) throws IOException
 	{
-		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(SpecialNodeType.SUB_ONE));
+		super(x, y, SpecialNodeImgLocResolver.getInstance().getLoc(
+				SpecialNodeType.SUB_ONE));
 	}
 }

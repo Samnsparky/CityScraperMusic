@@ -8,10 +8,10 @@ import java.util.Queue;
 
 import org.phineas.core.PhineasException;
 import org.phineas.core.PhineasGameFacade;
+import org.sampottinger.cityscraper.BoundableInfoSelector.Axis;
 import org.sampottinger.cityscraper.gui.DecoratedSlidingCollection;
 import org.sampottinger.cityscraper.gui.IconToggleButton;
 import org.sampottinger.cityscraper.gui.ToggleButton;
-import org.sampottinger.cityscraper.gui.SlenderSlider.SliderDirection;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorJanitor;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorStateManager;
@@ -43,16 +43,18 @@ public class NodeTypeBuilder
 	private PhineasGameFacade targetGame;
 	
 	/**
-	 * Creates a new node type selector builder
-	 * @param newX The x position of the upper left corner of this builder's selectors
-	 * @param newY The y position of the upper left corner of this builder's selectors
-	 * @param newHeight The height of this builder's selectors
-	 * @param newBGDepth The depth at which button backgrounds should be drawn
-	 * @param newFGDepth The depth at which button foregrounds should be drawn
-	 * @param newTargetGame The game that this selector will be part of
+	 * Creates a new node type selector builder.
+	 * @param newX The x position of the upper left corner of this builder's
+	 * 		selectors.
+	 * @param newY The y position of the upper left corner of this builder's
+	 * 		selectors.
+	 * @param newHeight The height of this builder's selectors.
+	 * @param newBGDepth The depth at which button backgrounds should be drawn.
+	 * @param newFGDepth The depth at which button foregrounds should be drawn.
+	 * @param newTargetGame The game that this selector will be part of.
 	 */
-	public NodeTypeBuilder(int newX, int newY, int newHeight, int newBGDepth, int newFGDepth,
-			PhineasGameFacade newTargetGame)
+	public NodeTypeBuilder(int newX, int newY, int newHeight, int newBGDepth,
+			int newFGDepth, PhineasGameFacade newTargetGame)
 	{
 		// Simple properties
 		x = newX;
@@ -70,12 +72,13 @@ public class NodeTypeBuilder
 	}
 	
 	/**
-	 * Creates and returns a new selector that meets the specifications previously provided to this
-	 * builder 
-	 * @throws IOException Thrown if an image could not be found
-	 * @throws PhineasException Thrown if image corrupted
+	 * Creates and returns a new selector that meets the specifications
+	 * previously provided to this builder.
+	 * @throws IOException Thrown if an image could not be found.
+	 * @throws PhineasException Thrown if image corrupted.
 	 */
-	public NodeTypeSelectorGUI createSelector() throws IOException, PhineasException
+	public NodeTypeSelectorGUI createSelector() throws IOException,
+			PhineasException
 	{	
 		int toggleButtonX;
 		Collection<TabRecord> tabRecords;
@@ -107,13 +110,17 @@ public class NodeTypeBuilder
 		toggleButtonX = x + toggleButtonsHorizOffset;
 		
 		// Prime build queue
-		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(TabType.FLOW, 
+		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(
+				TabType.FLOW, 
 				FlowNodeTypeInitializer.getInstance()));
-		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(TabType.LOGIC, 
+		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(
+				TabType.LOGIC, 
 				LogicNodeTypeInitializer.getInstance()));
-		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(TabType.MATH, 
+		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(
+				TabType.MATH, 
 				MathNodeTypeInitializer.getInstance()));
-		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(TabType.SOUND, 
+		buildQueue.add(new SimpleImmutableEntry<TabType,NodeTypeInitializer>(
+				TabType.SOUND, 
 				SoundNodeTypeInitializer.getInstance()));
 		
 		// Build tabs
@@ -123,10 +130,24 @@ public class NodeTypeBuilder
 			currentType = currentPair.getKey();
 			currentInitializer = currentPair.getValue();
 			
-			currentButtons = currentInitializer.createAndRegisterButtons(toggleButtonX, y, toggleButtonPadding, 
-					bgDepth, fgDepth, stateManager);
-			currentBuilder = new DecoratedSlidingCollectionBuilder<IconToggleButton>(toggleButtonX, 
-					y, scrollBarHorizOffset, SliderDirection.VERTICAL, height, height, currentButtons);
+			currentButtons = currentInitializer.createAndRegisterButtons(
+					toggleButtonX,
+					y,
+					toggleButtonPadding, 
+					bgDepth,
+					fgDepth,
+					stateManager);
+
+			currentBuilder = new  DecoratedSlidingCollectionBuilder<IconToggleButton>(
+					toggleButtonX, 
+					y,
+					scrollBarHorizOffset,
+					Axis.Y_AXIS,
+					height,
+					height,
+					currentButtons
+			);
+
 			currentContents = currentBuilder.createContents();
 			currentTabButton = tabLabelBuilder.createTabButton(currentType);
 			tabRecords.add(new TabRecord(currentTabButton, currentContents));

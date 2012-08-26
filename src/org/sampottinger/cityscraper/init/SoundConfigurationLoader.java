@@ -12,7 +12,7 @@ import java.util.TreeSet;
 import org.yaml.snakeyaml.Yaml;
 
 /**
- * High level facade to file manipulation and parsing to load sound info
+ * High level facade to file manipulation and parsing to load sound info.
  * @author Sam Pottinger
  */
 public class SoundConfigurationLoader
@@ -23,11 +23,11 @@ public class SoundConfigurationLoader
 	private static final String IMAGE_FIELD = "image";
 	private static final String SOUND_FIELD = "sound";
 	
-	private static SoundConfigurationLoader instance = null;
+	private static SoundConfigurationLoader instance;
 
 	/**
-	 * Gets a shared instance of this file manipuation facade
-	 * @return Shared instance of this singleton
+	 * Gets a shared instance of this file manipulation facade.
+	 * @return Shared instance of this singleton.
 	 */
 	public static SoundConfigurationLoader getInstance() {
 		if(instance == null)
@@ -53,12 +53,14 @@ public class SoundConfigurationLoader
 		parsedSoundDTOs = new TreeSet<SoundInfoRecord>();
 		
 		// Load file
-		URL url = this.getClass().getClassLoader().getResource(SOUND_CONFIG_FILE_LOC);
+		URL url = this.getClass().getClassLoader().getResource(
+				SOUND_CONFIG_FILE_LOC);
 		input = new BufferedReader(new InputStreamReader(url.openStream()));
 		
 		// Load YAML
 	    yamlReader = new Yaml();
-		parsedStruct = (Map<String, List<Map<String,String>>>) yamlReader.load(input);
+		parsedStruct = (Map<String, List<Map<String,String>>>) yamlReader.load(
+				input);
 		
 		// Pull sounds
 		loadedSoundConfigs = parsedStruct.get(SOUND_CONIFG_YAML_STRUCT_NAME);

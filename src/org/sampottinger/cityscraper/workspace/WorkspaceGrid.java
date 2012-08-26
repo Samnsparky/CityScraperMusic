@@ -3,11 +3,11 @@ package org.sampottinger.cityscraper.workspace;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.phineas.contrib.PhineasLocation;
 import org.phineas.core.PhineasBoundable;
-import org.sampottinger.cityscraper.SimpleCoordinatePair;
 
 /**
- * Data structure managing free and occupied spaces in the workspace grid
+ * Data structure managing free and occupied spaces in the workspace grid.
  * @author Sam Pottinger
  */
 public class WorkspaceGrid
@@ -18,33 +18,36 @@ public class WorkspaceGrid
 	
 	/**
 	 * Creates a new empty simulation grid that has discrete sized spaces
-	 * that are either occupied or not
-	 * @param newXStep The horizontal size of one of the discrete state spaces
-	 * @param newYStep The vertical size of one of the discrete state spaces
+	 * that are either occupied or not.
+	 * @param newXStep The horizontal size of one of the discrete state spaces.
+	 * @param newYStep The vertical size of one of the discrete state spaces.
 	 */
-	public WorkspaceGrid(int startX, int startY, int width, int height, int newXStep, int newYStep)
+	public WorkspaceGrid(int startX, int startY, int width, int height,
+			int newXStep, int newYStep)
 	{
-		occupancyGrid = new TwoDimensionalWorkspaceElementMap(startX, startY, width, height);
+		occupancyGrid = new TwoDimensionalWorkspaceElementMap(startX, startY,
+				width, height);
 		xStep = newXStep;
 		yStep = newYStep;
 	}
 	
 	/**
-	 * Mark the area that the given boundable covers as "occupied"
-	 * @param newElement The boundable whose area should be marked as occupied
+	 * Mark the area that the given boundable covers as "occupied".
+	 * @param newElement The boundable whose area should be marked as occupied.
 	 */
 	public void markOccupied(WorkspaceElement newElement)
 	{
-		Iterable<SimpleCoordinatePair> occupiedSpaces = getSpacesOccupiedBy(newElement);
-		for(SimpleCoordinatePair pos : occupiedSpaces)
+		Iterable<PhineasLocation> occupiedSpaces = getSpacesOccupiedBy(
+				newElement);
+		for(PhineasLocation pos : occupiedSpaces)
 			occupancyGrid.put(pos.getX(), pos.getY(), newElement);
 	}
 	
 	/**
-	 * Determine if the given position is already occupied by something
-	 * @param x The horizontal position to test
-	 * @param y The vertical position to test
-	 * @return true if already occupied and false otherwise
+	 * Determine if the given position is already occupied by something.
+	 * @param x The horizontal position to test.
+	 * @param y The vertical position to test.
+	 * @return true if already occupied and false otherwise.
 	 */
 	public boolean isOccupied(int x, int y)
 	{	
@@ -52,17 +55,16 @@ public class WorkspaceGrid
 	}
 	
 	/**
-	 * Determine if the element's area is completely free
+	 * Determine if the element's area is completely free.
 	 * @param element The element to test
-	 * @return true if any of the area covered by the given element is occupied and
-	 *         false if its bounding box is completely open
+	 * @return true if any of the area covered by the given element is occupied
+	 * 		and false if its bounding box is completely open.
 	 */
 	public boolean isOccupied(PhineasBoundable element)
 	{
-		Iterable<SimpleCoordinatePair> occupiedSpaces = getSpacesOccupiedBy(element);
-		for(SimpleCoordinatePair pos : occupiedSpaces)
+		Iterable<PhineasLocation> occupiedSpaces = getSpacesOccupiedBy(element);
+		for(PhineasLocation pos : occupiedSpaces)
 		{
-			// TODO: OK, that is a shameful kludge. Key is x and value is y... Not ok.
 			if(isOccupied(pos.getX(), pos.getY()))
 				return true;
 		}
@@ -70,22 +72,22 @@ public class WorkspaceGrid
 	}
 	
 	/**
-	 * Mark the area occupied by the given boundable as free
-	 * @param oldElement The boundable whose area will be marked as free
+	 * Mark the area occupied by the given boundable as free.
+	 * @param oldElement The boundable whose area will be marked as free.
 	 */
 	public void markUnoccupied(PhineasBoundable oldElement)
 	{
-		Iterable<SimpleCoordinatePair> occupiedSpaces = getSpacesOccupiedBy(oldElement);
-		for(SimpleCoordinatePair pos : occupiedSpaces)
+		Iterable<PhineasLocation> occupiedSpaces = getSpacesOccupiedBy(oldElement);
+		for(PhineasLocation pos : occupiedSpaces)
 			occupancyGrid.remove(pos.getX(), pos.getY());
 	}
 	
 	/**
-	 * Determine the x position of the start of the "space" the general coordinate
-	 * falls into 
-	 * @param positionToConvert The general x position to find the space for
+	 * Determine the x position of the start of the "space" the general
+	 * 		coordinate falls into.
+	 * @param positionToConvert The general x position to find the space for.
 	 * @return The start x position of the space the provided general x position
-	 *         falls into
+	 *         falls into.
 	 */
 	private int convertXPos(int positionToConvert)
 	{
@@ -93,11 +95,11 @@ public class WorkspaceGrid
 	}
 	
 	/**
-	 * Determine the y position of the start of the "space" the general coordinate
-	 * falls into 
-	 * @param positionToConvert The general y position to find the space for
+	 * Determine the y position of the start of the "space" the general
+	 * coordinate falls into.
+	 * @param positionToConvert The general y position to find the space for.
 	 * @return The start y position of the space the provided general x position
-	 *         falls into
+	 *         falls into.
 	 */
 	private int convertYPos(int positionToConvert)
 	{
@@ -105,15 +107,16 @@ public class WorkspaceGrid
 	}
 	
 	/**
-	 * Determine the upper left corner positions of the spaces that the given element
-	 * spans across
-	 * @param newElement The element to find the spaces for
-	 * @return Iterable over pairs of spaces' x and y coordinate values that the given element
-	 *                  spans over
+	 * Determine the upper left corner positions of the spaces that the given
+	 * element spans across.
+	 * @param newElement The element to find the spaces for.
+	 * @return Iterable over pairs of spaces' x and y coordinate values that the
+	 * 		given element spans over.
 	 */
-	public Collection<SimpleCoordinatePair> getSpacesOccupiedBy(PhineasBoundable newElement)
+	public Collection<PhineasLocation> getSpacesOccupiedBy(
+			PhineasBoundable newElement)
 	{
-		Collection<SimpleCoordinatePair> retList;
+		Collection<PhineasLocation> retList;
 		int rawX;
 		int rawY;
 		int fixedX;
@@ -126,7 +129,7 @@ public class WorkspaceGrid
 		int fixedMaxY;
 		
 		// Allocate for return value
-		retList = new LinkedList<SimpleCoordinatePair>();
+		retList = new LinkedList<PhineasLocation>();
 		
 		// Get position of nearest fitting space
 		rawX = newElement.getX();
@@ -145,7 +148,7 @@ public class WorkspaceGrid
 		{
 			for(curY = fixedY; curY < fixedMaxY; curY+=yStep)
 			{
-				retList.add(new SimpleCoordinatePair(curX, curY));
+				retList.add(new PhineasLocation(curX, curY));
 			}
 		}
 		
@@ -153,21 +156,29 @@ public class WorkspaceGrid
 	}
 	
 	/**
-	 * Get the element at the given position
-	 * @param x The x position of the space whose occupant is desired
-	 * @param y The y position of the space whose occupant is desired
-	 * @return The element at the given position or null if none there
+	 * Get the element at the given position.
+	 * @param x The x position of the space whose occupant is desired.
+	 * @param y The y position of the space whose occupant is desired.
+	 * @return The element at the given position or null if none there.
 	 */
 	public WorkspaceElement getElementAt(int x, int y)
 	{
 		return occupancyGrid.get(x, y);
 	}
 	
+	/**
+	 * Get the horizontal size in pixels of a space in this grid.
+	 * @return Horizontal size of a space in this grid.
+	 */
 	public int getXStep()
 	{
 		return xStep;
 	}
 	
+	/**
+	 * Get the vertical size in pixels of a space in this grid.
+	 * @return Vertical size of a space in this grid.
+	 */
 	public int getYStep()
 	{
 		return yStep;

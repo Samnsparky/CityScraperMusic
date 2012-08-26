@@ -3,12 +3,11 @@ package org.sampottinger.cityscraper;
 import org.phineas.core.PhineasBoundable;
 
 /**
- * A decorator that provides access to a specific attribute of 
- * boundable objects
+ * Decorator that provides polymorphistic access to boundable info for an axis.
  * 
- * A selector that, given an axis, decorates a boundable object 
- * and provides an interface to the bounds for
- * that object in that originally selected direction
+ * A selector that, given an axis, decorates a boundable object and provides an
+ * interface to the bounds for that object in that originally selected
+ * direction.
  * 
  * @author Sam Pottinger
  */
@@ -20,20 +19,21 @@ public class BoundableInfoSelector
 	private PhineasBoundable targetBoundable;
 	
 	/**
-	 * Creates a new boundable info selector decorator around the given boundable
-	 * @param newTargetAxis The axis to select for
-	 * @param newTargetBoundable The boundable to decorate
+	 * Creates a new info selector decorator around the given boundable.
+	 * @param newTargetAxis The axis to select for.
+	 * @param newTargetBoundable The boundable to decorate.
 	 */
-	public BoundableInfoSelector(Axis newTargetAxis, PhineasBoundable newTargetBoundable)
+	public BoundableInfoSelector(Axis newTargetAxis,
+			PhineasBoundable newTargetBoundable)
 	{
 		targetAxis = newTargetAxis;
 		targetBoundable = newTargetBoundable;
 	}
 	
 	/**
-	 * Get the lower bound on the selected axis
-	 * @return The lower coordinate of the bounding box on this decorator's 
-	 * selected axis
+	 * Get the lower bound on the selected axis.
+	 * @return The lower coordinate of the bounding box on this decorator's
+	 * selected axis.
 	 */
 	public int getLowerBound()
 	{

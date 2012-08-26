@@ -17,7 +17,8 @@ public class DijkstraConnection<T>
 	 * @param newEnd The space the connection ends on.
 	 * @param newDistance The "length" or value of this connection.
 	 */
-	public DijkstraConnection(DijkstraSpace<T> newStart, DijkstraSpace<T> newEnd, int newDistance)
+	public DijkstraConnection(DijkstraSpace<T> newStart,
+			DijkstraSpace<T> newEnd, int newDistance)
 	{
 		start = newStart;
 		end = newEnd;
@@ -32,8 +33,8 @@ public class DijkstraConnection<T>
 	 * @param newDistance The "length" or value of this connection.
 	 * @param newBidirectional If true, this is a bi-directional connection.
 	 */
-	public DijkstraConnection(DijkstraSpace<T> newStart, DijkstraSpace<T> newEnd, int newDistance,
-			boolean newBidirectional)
+	public DijkstraConnection(DijkstraSpace<T> newStart,
+			DijkstraSpace<T> newEnd, int newDistance, boolean newBidirectional)
 	{
 		start = newStart;
 		end = newEnd;
@@ -90,11 +91,14 @@ public class DijkstraConnection<T>
 	
 	/**
 	 * Gets the other space in this connection.
-	 * @param target The DijkstraSpace whose opposite to on this connection should be found.
+	 * @param target The DijkstraSpace whose opposite to on this connection
+	 * 		should be found.
 	 * @return The DijkstraSpace that is not the provided DijkstraSpace.
-	 * @throws SpaceNotFoundException Raised if given space is not in this connection.
+	 * @throws SpaceNotFoundException Raised if given space is not in this
+	 * 		connection.
 	 */
-	public DijkstraSpace<T> getOther(DijkstraSpace<T> space) throws SpaceNotFoundException
+	public DijkstraSpace<T> getOther(DijkstraSpace<T> space)
+			throws SpaceNotFoundException
 	{
 		if(space == start)
 			return end;

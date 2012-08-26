@@ -1,14 +1,14 @@
 package org.sampottinger.cityscraper.gui;
 
-import org.phineas.core.PhineasBoundable;
 import org.phineas.core.PhineasHoverListener;
 import org.phineas.core.PhineasScrollWheelListener;
 
 /**
- * Region that responds to scroll events to operate on slider sources
+ * Region that responds to scroll events to operate on slider sources.
  * @author Sam Pottinger
  */
-public class ScrollResponsiveRegion implements PhineasScrollWheelListener, PhineasBoundable, PhineasHoverListener
+public class ScrollResponsiveRegion implements PhineasScrollWheelListener,
+		PhineasHoverListener
 {
 	
 	private SliderSource target;
@@ -21,15 +21,16 @@ public class ScrollResponsiveRegion implements PhineasScrollWheelListener, Phine
 	private boolean active;
 	
 	/**
-	 * Creates a new region that will operate on the given target
+	 * Creates a new region that will operate on the given target.
 	 * @param newTarget The target to update values in as responding to
-	 * scroll events on this region 
-	 * @param newX The x position of the upper left corner of this region
-	 * @param newY The y position of the upper left corner of this region
-	 * @param newWidth The number of pixels wide this region is
-	 * @param newHeight The number of pixels high this region is
+	 * scroll events on this region .
+	 * @param newX The x position of the upper left corner of this region.
+	 * @param newY The y position of the upper left corner of this region.
+	 * @param newWidth The number of pixels wide this region is.
+	 * @param newHeight The number of pixels high this region is.
 	 */
-	public ScrollResponsiveRegion(SliderSource newTarget, int newX, int newY, int newWidth, int newHeight)
+	public ScrollResponsiveRegion(SliderSource newTarget, int newX, int newY,
+			int newWidth, int newHeight)
 	{
 		target = newTarget;
 		x = newX;

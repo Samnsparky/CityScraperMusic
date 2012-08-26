@@ -9,7 +9,7 @@ import org.sampottinger.cityscraper.nodes.CityScraperNodePrototype;
 
 /**
  * Manager for state of toggle buttons that select actual node types through
- * the NodeTypeSelectorGUI
+ * the NodeTypeSelectorGUI.
  * @author Sam Pottinger
  */
 public class NodeTypeSelectorStateManager
@@ -26,12 +26,14 @@ public class NodeTypeSelectorStateManager
 	}
 	
 	/**
-	 * Creates a new association between the given node prototype and the toggle button used to
-	 * select that node type
-	 * @param nodePrototype The prototype for the node type that the given button selects for
-	 * @param selectionButton The button being registered
+	 * Creates a new association between the given node prototype and the 
+	 * toggle button used to select that node type.
+	 * @param nodePrototype The prototype for the node type that the given
+	 * 		button selects for.
+	 * @param selectionButton The button being registered.
 	 */
-	public void registerButton(CityScraperNodePrototype nodePrototype, ToggleButton selectionButton)
+	public void registerButton(CityScraperNodePrototype nodePrototype,
+			ToggleButton selectionButton)
 	{
 		// Make final references for anonymous inner class
 		final CityScraperNodePrototype innerNodePrototype = nodePrototype;
@@ -59,8 +61,8 @@ public class NodeTypeSelectorStateManager
 	}
 	
 	/**
-	 * Set the prototype to report as currently selected
-	 * @param prototype The prototype to report as active
+	 * Set the prototype to report as currently selected.
+	 * @param prototype The prototype to report as active.
 	 */
 	private void setSelectedPrototype(CityScraperNodePrototype prototype)
 	{
@@ -68,8 +70,8 @@ public class NodeTypeSelectorStateManager
 	}
 	
 	/**
-	 * Resets all of the registered toggle buttons but the given exception
-	 * @param exception The toggle button to leave in its current state
+	 * Resets all of the registered toggle buttons but the given exception.
+	 * @param exception The toggle button to leave in its current state.
 	 */
 	private void resetAllToggleButtonsBut(ToggleButton exception)
 	{
@@ -82,8 +84,8 @@ public class NodeTypeSelectorStateManager
 	
 	// TODO: Returning null is sooo C++. Either way, we shouldn't do it.
 	/**
-	 * Get the prototype corresponding to the currently selected toggle button
-	 * @return Prototype for selected node type or null if none selected
+	 * Get the prototype corresponding to the currently selected toggle button.
+	 * @return Prototype for selected node type or null if none selected.
 	 */
 	public CityScraperNodePrototype getSelectedPrototype()
 	{

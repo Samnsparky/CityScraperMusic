@@ -10,16 +10,16 @@ import org.phineas.core.PhineasGlobalClickListener;
 import org.phineas.core.PhineasGlobalMouseMovementListener;
 import org.phineas.core.PhineasHoverListener;
 import org.phineas.core.PhineasStepListener;
+import org.sampottinger.cityscraper.BoundableInfoSelector.Axis;
 
 /**
  * Minimalistic GUI slider
  * @author Sam Pottinger
  */
-public class SlenderSlider implements PhineasClickListener, PhineasGlobalClickListener, PhineasGlobalMouseMovementListener, 
-PhineasHoverListener, PhineasStepListener, PhineasDrawable
-{
-	public static enum SliderDirection {HORIZONTAL, VERTICAL};
-	
+public class SlenderSlider implements PhineasClickListener,
+		PhineasGlobalClickListener, PhineasGlobalMouseMovementListener,
+		PhineasHoverListener, PhineasStepListener, PhineasDrawable
+{	
 	private static final Color INACTIVE_COLOR = new Color(134, 130, 130);
 	private static final Color ACTIVE_COLOR = new Color(179, 171, 171);
 	private static final Color HOVER_COLOR = new Color(217, 210, 210);
@@ -36,25 +36,29 @@ PhineasHoverListener, PhineasStepListener, PhineasDrawable
 	private int maxBoxPos;
 	private int sliderBoxSize;
 	private int depth;
-	private SliderDirection direction;
+	private Axis direction;
 	private boolean active;
 	private float pixelConversionValue;
-	private PhineasRectangle box = null;
-	private PhineasRectangle centerLine = null;
+	private PhineasRectangle box;
+	private PhineasRectangle centerLine;
 	
 	/**
-	 * Create a new slider 
-	 * @param target The source to have the slider operate on
-	 * @param x The x position of the left of the slider's range
-	 * @param y The y position of the top of the slider's range
-	 * @param newSliderBoxSize The size of the box on the slider
-	 * @param travel How far the slider can move (in pixels)
-	 * @param direction The direction in which this slider travels
-	 * @param showCenterLine If true, a thin line outlining the range of the slider will be shown
-	 * @param newDepth The level at which this slider should be drawn (affects drawing order)
+	 * Create a new slider.
+	 * 
+	 * @param target The source to have the slider operate on.
+	 * @param x The x position of the left of the slider's range.
+	 * @param y The y position of the top of the slider's range.
+	 * @param newSliderBoxSize The size of the box on the slider.
+	 * @param travel How far the slider can move (in pixels).
+	 * @param direction The axis on which this slider travels.
+	 * @param showCenterLine If true, a thin line outlining the range of the
+	 * 		slider will be shown.
+	 * @param newDepth The level at which this slider should be drawn
+	 * 		(affects drawing order).
 	 */
-	public SlenderSlider(SliderSource newTarget, int newX, int newY, int newSliderBoxSize, int newTravel,
-			SliderDirection newDirection, boolean showCenterLine, int newDepth)
+	public SlenderSlider(SliderSource newTarget, int newX, int newY,
+			int newSliderBoxSize, int newTravel, Axis newDirection,
+			boolean showCenterLine, int newDepth)
 	{
 		
 		// Save simple attributes
@@ -70,11 +74,11 @@ PhineasHoverListener, PhineasStepListener, PhineasDrawable
 		// Determine slider box sizes
 		switch(direction)
 		{
-		case HORIZONTAL:
+		case X_AXIS:
 			boxWidth = sliderBoxSize;
 			boxHeight = SMALL_DIMENSION_SIZE;
 			break;
-		case VERTICAL:
+		case Y_AXIS:
 			boxWidth = SMALL_DIMENSION_SIZE;
 			boxHeight = sliderBoxSize;
 			break;
@@ -83,40 +87,72 @@ PhineasHoverListener, PhineasStepListener, PhineasDrawable
 		// Attach graphical components
 		switch(direction)
 		{
-		case HORIZONTAL:
-			box = new PhineasRectangle(x, y + STATIC_AXIS_OFFSET, boxWidth, boxHeight, INACTIVE_COLOR);
+		case X_AXIS:
+			box = new PhineasRectangle(
+					x,
+					y + STATIC_AXIS_OFFSET,
+					boxWidth,
+					boxHeight,
+					INACTIVE_COLOR
+			);
+	
 			if(showCenterLine)
-				centerLine = new PhineasRectangle(x, y, travel + boxWidth, CENTER_LINE_SIZE, INACTIVE_COLOR);
+				centerLine = new PhineasRectangle(
+						x,
+						y,
+						travel + boxWidth,
+						CENTER_LINE_SIZE,
+						INACTIVE_COLOR
+				);
 			break;
-		case VERTICAL:
-			box = new PhineasRectangle(x + STATIC_AXIS_OFFSET, y, boxWidth, boxHeight, INACTIVE_COLOR);
+
+		case Y_AXIS:
+			box = new PhineasRectangle(
+					x + STATIC_AXIS_OFFSET,
+					y,
+					boxWidth,
+					boxHeight,
+					INACTIVE_COLOR
+			);
+
 			if(showCenterLine)
-				centerLine = new PhineasRectangle(x, y, CENTER_LINE_SIZE, travel + boxHeight, INACTIVE_COLOR);
+				centerLine = new PhineasRectangle(
+						x,
+						y,
+						CENTER_LINE_SIZE,
+						travel + boxHeight,
+						INACTIVE_COLOR
+				);
 			break;
 		}
 		
 		refreshPos();
 	}
 	
+	/**
+	 * Update the position of the box on the slider.
+	 */
 	public void refreshPos()
 	{
 		int numPixelsBoxDisplaced;
 		int sliderBoxX;
 		int sliderBoxY;
 		
-		pixelConversionValue = travel / (target.getMaxValue() - target.getMinValue());
-		numPixelsBoxDisplaced = (int)((target.getValue() - target.getMinValue()) * pixelConversionValue);
+		pixelConversionValue = travel /
+				(target.getMaxValue() - target.getMinValue());
+		numPixelsBoxDisplaced = (int)((target.getValue() - 
+				target.getMinValue()) * pixelConversionValue);
 		
 		// Determine dimensions of slider box and set position
 		switch(direction)
 		{
-		case HORIZONTAL:
+		case X_AXIS:
 			sliderBoxX = x + numPixelsBoxDisplaced;
 			sliderBoxY = y;
 			maxBoxPos = travel + x;
 			box.setX(sliderBoxX);
 			break;
-		case VERTICAL:
+		case Y_AXIS:
 			sliderBoxX = x; 
 			sliderBoxY = y + numPixelsBoxDisplaced;
 			maxBoxPos = travel + y;
@@ -144,12 +180,12 @@ PhineasHoverListener, PhineasStepListener, PhineasDrawable
 		// TODO: Clean this up
 		switch(direction)
 		{
-		case HORIZONTAL:
+		case X_AXIS:
 			sliderBoxCenter = sliderBoxX + sliderBoxSize / 2;
 			boxDisplacement = newX - sliderBoxCenter;
 			boxInitialValue = x;
 			break;
-		case VERTICAL:
+		case Y_AXIS:
 			sliderBoxCenter = sliderBoxY + sliderBoxSize / 2;
 			boxDisplacement = newY - sliderBoxCenter;
 			boxInitialValue = y;
@@ -158,7 +194,7 @@ PhineasHoverListener, PhineasStepListener, PhineasDrawable
 		
 		switch(direction)
 		{
-		case HORIZONTAL:
+		case X_AXIS:
 			newPosVal = sliderBoxX + boxDisplacement;
 			if(newPosVal < x)
 				newPosVal = x;
@@ -166,7 +202,7 @@ PhineasHoverListener, PhineasStepListener, PhineasDrawable
 				newPosVal = maxBoxPos;
 			box.setX(newPosVal);
 			break;
-		case VERTICAL:
+		case Y_AXIS:
 			newPosVal = sliderBoxY + boxDisplacement;
 			if(newPosVal < y)
 				newPosVal = y;
