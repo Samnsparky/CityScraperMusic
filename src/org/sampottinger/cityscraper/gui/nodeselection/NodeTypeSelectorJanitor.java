@@ -5,7 +5,7 @@ import org.phineas.core.PhineasGameFacade;
 
 /**
  * Abstraction layer between a node selector and the game it is running in
- * that cleans up unwanted elements and adds new ones
+ * that cleans up unwanted elements and adds new ones.
  * @author Sam Pottinger
  */
 public class NodeTypeSelectorJanitor

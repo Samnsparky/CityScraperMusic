@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.phineas.core.PhineasDrawable;
 import org.phineas.core.PhineasException;
 import org.phineas.core.PhineasGameFacade;
+import org.sampottinger.cityscraper.gui.PlayControls;
 import org.sampottinger.cityscraper.gui.WorkspaceRegion;
 import org.sampottinger.cityscraper.gui.nodeselection.NodeTypeSelectorGUI;
 import org.sampottinger.cityscraper.gui.nodeselection.TabSelectionButton.TabType;
@@ -25,6 +26,8 @@ public class Cityscraper {
 	private static final int WORKSPACE_HEIGHT = 608;
 	private static final int X_DISCRETE_STEP = 16;
 	private static final int Y_DISCRETE_STEP = 16;
+	private static final int PLAY_CONTROLS_X = 290;
+	private static final int PLAY_CONTROLS_Y = 615;
 	
 	private static final int BUTTON_FG_DEPTH = PhineasDrawable.DEFAULT_DEPTH;
 	private static final int BUTTON_BG_DEPTH = BUTTON_FG_DEPTH + 1;
@@ -109,6 +112,9 @@ public class Cityscraper {
 					e
 			);
 		}
+		
+		// Create play controls
+		game.addEntity(new PlayControls(PLAY_CONTROLS_X, PLAY_CONTROLS_Y));
 	}
 
 }
